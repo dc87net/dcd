@@ -1,0 +1,6 @@
+#!/bin/bash
+
+s="./script/py/netinfo.py"
+exe="$(brew --prefix)/bin/python3"
+
+eval "$exe $s"
