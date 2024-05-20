@@ -4,7 +4,7 @@ script = r"""#!/bin/bash
 ## Copyright 2024 DC87 Solutions LLC. All rights reserved.
 
 # Get the active interface name using the updated method
-active_interface=$(scutil --nwi | grep flags | grep -v utun | grep IP | awk '{print $1}')
+activeInterfaces=$(scutil --nwi | grep flags | grep -v utun | grep IP | awk '{print $1}')
 
 # Check if an active interface was found
 if [ -z "$active_interface" ]; then
@@ -18,7 +18,7 @@ fi
 # Header
 #printf "%-10s %-20s %-16s %-40s\n" "Interface" "Hardware Port" "IPv4" "IPv6"
 
-for i in $active_interface
+for i in $activeInterfaces
 do
   interface=$i
   hardware_port=$(networksetup -listallhardwareports | grep -B1 "Device: $i" | awk -F ": " '/Hardware Port/{print $2}')

@@ -2,3 +2,4 @@
 *.toc
 /.idea/
 
+*.out

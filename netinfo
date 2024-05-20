@@ -1,6 +1,9 @@
 #!/bin/bash
 
-s="./script/py/netinfo.py"
-exe="$(brew --prefix)/bin/python3"
+prefix='/opt/script'
+
+s="$prefix/script/py/netinfo.py"
+#exe="$(brew --prefix)/bin/python3"
+exe='/usr/bin/env python3'
 
 eval "$exe $s"
