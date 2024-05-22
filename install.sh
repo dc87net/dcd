@@ -8,30 +8,33 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 # Get list of subdirectories
-export base='/opt/script/script'
-declare -a dirs=($(ls -F "$base" | grep '/'| awk '{print $NF}'))
+export scriptsPath='/opt/script/script'
+declare -a dirs=($(ls -F "$scriptsPath" | grep '/'| awk '{print $NF}'))
+echo "Updating utility registry..." #:\t@ $scriptsPath; sleep 0.2
 
+# Remove and recreate the symlink folder
+binPath="$scriptsPath/.."
+binPath="$(realpath $binPath)/bin"
+rm -rf "$binPath"
+mkdir -p "$binPath" > /dev/null 2>&1
+#echo -e "Symbolic links @:\t $binPath";
+sleep 0.4
 
-
-echo "Updating utility registry@:\t $base"
-mkdir -p "$base/../bin" 2>&1 /dev/null
-binPath=$(realpath "$base/../bin")
-echo -e "Symbolic links@:\t $binPath"
-
+echo "********"
 # Enumerate the utility subdirectories (organized by type)
 for dir in $dirs; do      # 🔴Enumerate the folders of script container directory
-  subdir="$base/$dir"
+  subdir="$scriptsPath/$dir"
   pushd "$subdir"
   echo -e "Elaborating ${RED}\e[1m$subdir\e[0m${NC}..."
 
   declare -a files=($(ls -F "$subdir" | grep '*' | awk -F'*' '{print $1}'))
   for file in $files; do  # 🔴Enumerate & link the scripts to the symlink dir
     linkName=$(echo "$file" | awk -F'.' '{print $1}')
-    echo -e "  -- linking: ${CYAN}$file${NC} as ${BLUE}$linkName${NC}"
-    ln -s "$file" "$binPath/$linkName"
+    echo -ne "  -- linking: ${CYAN}$file${NC} as ${BLUE}$linkName${NC}"
+    echo -ne "\t@  $binPath/$linkName"
+    echo ""
+    ln -s "$(pwd)/$file" "$binPath/$linkName"
 
   done
   popd 2>&1 /dev/null
-
-  let "count=count+1"
 done
