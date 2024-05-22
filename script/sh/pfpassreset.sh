@@ -10,9 +10,10 @@
 ## SCRIPT ##
 ############
 
-/sbin/mount -u /
+bash <<< "/sbin/mount -u /
 /sbin/zfs mount -a
 /sbin/zfs mount pfSense/ROOT/default/cf
 /sbin/zfs mount pfSense/ROOT/default/var_db_pkg
 /sbin/nextboot -D
 /etc/rc.initial.password
+y"
