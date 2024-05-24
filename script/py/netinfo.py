@@ -6,9 +6,10 @@ script = r"""#!/bin/bash
 # Get the active interface name using the updated method
 activeInterfaces=$(scutil --nwi | grep flags | grep -v utun | grep IP | awk '{print $1}')
 
+echo -e "detected: $activeInterfaces"
 # Check if an active interface was found
-if [ -z "$active_interface" ]; then
-    echo "No active IPv4 interface found."
+if [ -z "$activeInterfaces" ]; then
+    echo -n "No active IPv4 interface found."
     exit 1
 else
     :
