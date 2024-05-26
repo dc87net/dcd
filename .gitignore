@@ -2,5 +2,7 @@
 *.toc
 /.idea/
 /bin/*
+**/.*
 
 *.out
+script/sh/gptPathScript.sh
