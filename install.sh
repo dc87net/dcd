@@ -16,24 +16,19 @@ NC='\033[0m' # No Color
 export basePath='/opt/script'
 export scriptsContainer="$basePath/script"
 
-getScriptPath(){
-  lsofOutput="$(lsof | grep "$0" | awk '{print $NF}')"
-  output="$lsofOutput"
-  if [[ $lsofOutput == "" ]]; then
-    output="$0"
-  fi
-  echo "$output"
-  exit 0
-}
-
 # Print welcome message
 echo -e "\t${YELLOW}══════ ***-> Hang On... <-*** ══════${NC}"
-sleep 0.5;
 sudo rm -rf "$basePath"
-
 # Copy to the install path
-thisPath="$(getScriptPath)"
+## Get the true path:
+lsofOutput="$(lsof | grep "$0" | awk '{print $NF}')"
+output="$lsofOutput"
+if [[ $lsofOutput == "" ]]; then
+  output="$0"
+fi
+thisPath=$output
 echo -e "${YELLOW}==>  ${NC}this:\t ${CYAN}$thisPath${NC}"
+
 sleep 1
 thisPath="$(dirname $(realpath $thisPath))"
 echo -e "${YELLOW}==>  ${NC}real:\t ${RED}$thisPath${NC}"
@@ -50,6 +45,7 @@ cd "$basePath" || exit -1
 # Get list of subdirectories
 declare -a dirs=($(ls -F "$scriptsContainer" | grep '/' | awk '{print $1}'))
 echo -e "${YELLOW}==>  ${NC}${GREEN}scriptsContainer${NC}:\t $scriptsContainer"
+
 
 # Remove and recreate the symlink folder
 binPath="$basePath/bin"
@@ -85,11 +81,11 @@ echo -e "${YELLOW}==>${NC} USER:\t${MAGENTA}$user${NC}"
 currentProfile="/Users/$user/.zshrc"
 # Read the current .zshrc without the pathString line
 filteredProfile=$(grep -v "$pathString" "$currentProfile")
-echo -e " ${YELLOW2}└──╼${NC}  ${RED}.zshrc${NC}:  $filteredProfile"
+echo -e " ${YELLOW2}└──╼${NC}  ${RED}.zshrc${NC}:  OK" #$filteredProfile
 
 # Prepare the new PATH line
 newPath="PATH=$basePath:\$PATH"
-echo -e " ${YELLOW2}└──╼${NC}  ${RED}Append${NC}: ${CYAN}$newPath${NC}"
+echo -e " ${YELLOW2}└──╼${NC}  ${RED}Append${NC}: OK" #${CYAN}$newPath${NC}
 
 # Write the updated content back to .zshrc
 {
@@ -105,5 +101,7 @@ cat "$currentProfile"
 echo -e "${NC}"
 echo ''
 
+echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpldmFsIGJhc2ggLWMgL29wdC9zY3JpcHQvYmluLyRACg==' | base64 -d | tee > "$basePath/dcd"
+chmod 755 "$basePath/dcd"
 # Switch to the specified user and start a new login shell, replacing the current shell
 exec su - $user -c "exec zsh"
