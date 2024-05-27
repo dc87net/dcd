@@ -1,0 +1,3 @@
+alias cdrp='eval cd \"$(realpath .)\"'
+YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=
+

@@ -2,15 +2,7 @@
 ## Copyright 2024 Douglas Chiri, DC87 Solutions LLC. All rights reserved.
 
 # Color constants
-RED='\033[0;31m'
-BLUE='\033[0;34m'
-BLUE2='\033[0;94m'
-CYAN='\033[0;36m'
-GREEN='\033[0;92m'
-YELLOW='\033[0;93m'
-YELLOW2='\033[0;33m'
-MAGENTA='\033[0;35m'
-NC='\033[0m' # No Color
+source ./etc/colors.sh
 
 # Installation constants
 export basePath='/opt/script'
@@ -27,38 +19,39 @@ if [[ $lsofOutput == "" ]]; then
   output="$0"
 fi
 thisPath=$output
-echo -e "${YELLOW}==>  ${NC}this:\t ${CYAN}$thisPath${NC}"
+log "this:\t ${CYAN}$thisPath${NC}"
 
 sleep 1
 thisPath="$(dirname $(realpath $thisPath))"
-echo -e "${YELLOW}==>  ${NC}real:\t ${RED}$thisPath${NC}"
-echo -e "${YELLOW}==>  ${NC}basePath:\t $basePath"
+log "real:\t ${RED}$thisPath${NC}"
+log "basePath:\t $basePath"
+read -r
 
 mkdir -p "$basePath"
 sudo chown -R douglas "$basePath"
 chmod 777 "$basePath"
 
-echo -e "${YELLOW}==>  ${NC}COPYING: <$thisPath> to <$basePath/..>"
+log "COPYING: <$thisPath> to <$basePath/..>"
 sudo cp -R "$thisPath" "$basePath/../" || exit -2
 cd "$basePath" || exit -1
 
 # Get list of subdirectories
 declare -a dirs=($(ls -F "$scriptsContainer" | grep '/' | awk '{print $1}'))
-echo -e "${YELLOW}==>  ${NC}${GREEN}scriptsContainer${NC}:\t $scriptsContainer"
+log "${GREEN}scriptsContainer${NC}:\t $scriptsContainer"
 
 
 # Remove and recreate the symlink folder
 binPath="$basePath/bin"
 rm -rf "$binPath"
 mkdir -p "$binPath" > /dev/null 2>&1
-echo -e "${YELLOW}==>  ${NC}symlinks @:\t ${CYAN}$binPath${NC}";
+log "symlinks @:\t ${CYAN}$binPath${NC}";
 sleep 0.4
 
 echo -e "${YELLOW2}  ********\t********\t********\t********${NC}"
 # Enumerate the utility subdirectories (organized by type)
 for dir in "${dirs[@]}"; do      # 🔴Enumerate the folders of script container directory
   subdir="$scriptsContainer/$dir"
-  echo -e "${YELLOW}==>  ${NC}${MAGENTA}Elaborating${NC}: ${RED}$subdir${NC}"
+  log "${MAGENTA}Elaborating${NC}: ${RED}$subdir${NC}"
   pushd "$subdir" > /dev/null || { echo "Failed to navigate to $subdir"; continue; }
 
   declare -a files=($(ls -F "$subdir" | grep '*' | awk -F'*' '{print $1}'))
@@ -71,7 +64,7 @@ for dir in "${dirs[@]}"; do      # 🔴Enumerate the folders of script container
   done
   popd > /dev/null
 done
-echo -e "${YELLOW}==>  ${NC}${GREEN}COPY COMPLETE!${NC}"
+log "${GREEN}COPY COMPLETE!${NC}"
 
 # Update PATH
 pathString="PATH=$basePath:\$PATH"
@@ -100,6 +93,10 @@ echo -ne " ${YELLOW2}└──╼${NC}  ${RED}FINAL${NC}: ${BLUE2}"
 cat "$currentProfile"
 echo -e "${NC}"
 echo ''
+
+echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d | tee >> ~/.zshrc
+#(cat ~/.zshrc | grep -v
+#YWxpYXMgY2RycD0nZXZhbCBjZCBcIi9Vc2Vycy9TaGFyZWQvc2NyaXB0XCInCg==
 
 echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpldmFsIGJhc2ggLWMgL29wdC9zY3JpcHQvYmluLyRACg==' | base64 -d | tee > "$basePath/dcd"
 chmod 755 "$basePath/dcd"

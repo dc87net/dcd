@@ -8,6 +8,7 @@ echo -e " @ \033[1m $(pwd) \033[0m"
 
 zsh
 cd ~
+read -p "Press Enter/return to clean up.  Save anything you want to keep now. (Ctrl+d to pause)"
 rm -rf "$dirLocation"
 
 echo "Cleaned up!"

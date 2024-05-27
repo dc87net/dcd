@@ -10,7 +10,8 @@
 ## SCRIPT ##
 ############
 
-bash <<< "/sbin/mount -u /
+echo -e "Enter the following commands from Single User mode:\n"
+cat <<< "/sbin/mount -u /
 /sbin/zfs mount -a
 /sbin/zfs mount pfSense/ROOT/default/cf
 /sbin/zfs mount pfSense/ROOT/default/var_db_pkg
