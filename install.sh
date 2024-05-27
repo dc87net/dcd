@@ -25,7 +25,6 @@ sleep 1
 thisPath="$(dirname $(realpath $thisPath))"
 log "real:\t ${RED}$thisPath${NC}"
 log "basePath:\t $basePath"
-read -r
 
 mkdir -p "$basePath"
 sudo chown -R douglas "$basePath"
