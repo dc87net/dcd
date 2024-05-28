@@ -3,7 +3,7 @@
 ## Include this using `source` for some ASCII colors ONLY!
 ##
 ## TO IMPORT THE COLOR TABLE INTO THE ENVIRONMENT:
-##   dcd colors | source
+##   TBD
 ## Usage: echo -e "This is ${RED}red${NC} text!"
 ############################
 
@@ -45,6 +45,12 @@ _COLORS2ENV(){
 }
 # IMPORTANT: Actually add Color Table to the enN [NEXT LINE]:
 eval "$(_COLORS2ENV)"
+
+_COLORS(){
+  exec zsh
+}
+
+_COLORS
 ##--------------------------------------------------------------
 
 ## Logging, if applicable
@@ -71,11 +77,17 @@ demoColoredText(){
 }
 # Comment out the below line to completely disable the demo feature
 #demoColoredText $#
+echo "cmd: $0 $*"
 
-## main() for this script [runs if called as executable `colors`]
-[ -"$0" == "colors" ] && {
-  COLORS2ENV
-}
+## main() for  this script [runs if called as executable `colors`]
+if [ "$0" == "colors" ] or [ "$1" == "colors" ]; then
+#  tempfile=$(mktemp)
+#  _COLORS2ENV > $tempfile
+#  echo "$tempfile"
+  log "Adding colors to environment..."
+  #eval "$(_COLORS2ENV)"
+  exec "zsh" -i
+fi
 
 
 
@@ -92,4 +104,3 @@ demoColoredText(){
 #MAGENTA='\033[0;35m'
 #NC='\033[0m' # No Color";
 #}
-

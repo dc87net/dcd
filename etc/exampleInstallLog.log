@@ -1,0 +1,70 @@
+╭─    /Users/Shared/script  on   main +6 !5 ▓▒░───────────░▒▓ PIPE|127 ✘  at 11:31:19  ─╮
+╰─ sudo bash install.sh | tee ./etc/exampleInstallLog.log                                        ─╯
+==>  SELF:      /Users/Shared/script/install.sh
+==>  REAL:      /Users/Shared/script
+==>  basePath:  /opt/script
+==>  COPYING: </Users/Shared/script> to </opt/>
+==>  scriptsContainer:         /opt/script/script
+==>  symlinks @:        /opt/script/bin
+  ********        ********        ********        ********
+==>  Elaborating: /opt/script/script/cpp/
+==>  Elaborating: /opt/script/script/py/
+ └──╼  linking: netinfo.py as netinfo        (/opt/script/bin/netinfo)
+==>  Elaborating: /opt/script/script/sh/
+ └──╼  linking: boxDrawingChars.sh as boxDrawingChars        (/opt/script/bin/boxDrawingChars)
+ └──╼  linking: cfunload.sh as cfunload      (/opt/script/bin/cfunload)
+ └──╼  linking: colors.sh as colors  (/opt/script/bin/colors)
+ └──╼  linking: compname.sh as compname      (/opt/script/bin/compname)
+ └──╼  linking: dctmp.sh as dctmp    (/opt/script/bin/dctmp)
+ └──╼  linking: getpath.sh as getpath        (/opt/script/bin/getpath)
+ └──╼  linking: installBrew.sh as installBrew        (/opt/script/bin/installBrew)
+ └──╼  linking: pathfinder.sh as pathfinder  (/opt/script/bin/pathfinder)
+ └──╼  linking: pfconnex.sh as pfconnex      (/opt/script/bin/pfconnex)
+ └──╼  linking: pfpassreset.sh as pfpassreset        (/opt/script/bin/pfpassreset)
+==>  COPY COMPLETE!
+==> USER:      local
+ └──╼  Append: /Users/local/.zshrc:   PATH=/opt/script:$PATH
+ └──╼  Append: /Users/local/.zshrc:   alias cdrp='eval cd \"$(realpath .)\"'
+==>  Writing dcd executable to /opt/script/dcd
+==>  Updating permissions...
+==>  Installation COMPLETE!
+==>  TREE:
+/opt/script
+├── LICENSE
+├── README.md
+├── bin
+│   ├── boxDrawingChars -> /opt/script/script/sh//boxDrawingChars.sh
+│   ├── cfunload -> /opt/script/script/sh//cfunload.sh
+│   ├── colors -> /opt/script/script/sh//colors.sh
+│   ├── compname -> /opt/script/script/sh//compname.sh
+│   ├── dctmp -> /opt/script/script/sh//dctmp.sh
+│   ├── getpath -> /opt/script/script/sh//getpath.sh
+│   ├── installBrew -> /opt/script/script/sh//installBrew.sh
+│   ├── netinfo -> /opt/script/script/py//netinfo.py
+│   ├── pathfinder -> /opt/script/script/sh//pathfinder.sh
+│   ├── pfconnex -> /opt/script/script/sh//pfconnex.sh
+│   └── pfpassreset -> /opt/script/script/sh//pfpassreset.sh
+├── dcd
+├── etc
+│   ├── colors.sh
+│   ├── exampleInstallLog.log
+│   └── scratch_1.txt
+├── install.sh
+└── script
+    ├── cpp
+    │   └── matrix.cpp
+    ├── py
+    │   └── netinfo.py
+    └── sh
+        ├── boxDrawingChars.sh
+        ├── cfunload.sh
+        ├── colors.sh
+        ├── compname.sh
+        ├── dctmp.sh
+        ├── getpath.sh
+        ├── installBrew.sh
+        ├── pathfinder.sh
+        ├── pfconnex.sh
+        └── pfpassreset.sh
+
+7 directories, 30 files
