@@ -1,0 +1,4 @@
+alias cdrp='eval cd \"$(realpath .)\"'
+YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=
+
+https://dash.cloudflare.com/profile/api-tokens
