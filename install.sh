@@ -95,7 +95,7 @@ updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 ## SECTION 3: CLEAN-UP & STAGING
 # Write `dcd`
 log "Writing ${BCYAN}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
-echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpldmFsIGJhc2ggLWMgL29wdC9zY3JpcHQvYmluLyRACg==' | base64 -d > "$basePath/dcd"
+echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyQqIgo=' | base64 -d > "$basePath/dcd"
 chmod 755 "$basePath/dcd"
 
 # Fix perms on the install directory
