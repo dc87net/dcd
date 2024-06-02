@@ -65,14 +65,14 @@ echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
 # Enumerate the utility subdirectories (organized by type)
 for dir in "${dirs[@]}"; do      # 🔴Enumerate the folders of script container directory
   subdir="$scriptsContainer/$dir"
-  log "${MAGENTA}Elaborating${NC}: ${RED}$subdir${NC}"
+  log "${MAGENTA}Elaborating${NC}: ${BYELLOW}$subdir${NC}"
   pushd "$subdir" > /dev/null || { echo "Failed to navigate to $subdir"; continue; }
 
   declare -a files=($(ls -F "$subdir" | grep '*' | awk -F'*' '{print $1}'))
   for file in "${files[@]}"; do  # 🔴Enumerate & link the scripts to the symlink dir
     linkName=$(echo "$file" | awk -F'.' '{print $1}')
     echo -ne " ${BYELLOW}└──╼${NC}  linking: ${CYAN}$file${NC} as ${GREEN}$linkName${NC}"
-    echo -ne "\t(${BLUE}$binPath/$linkName${NC})"
+    echo -ne "\t(${BBLUE}$binPath/$linkName${NC})"
     echo ""
     ln -s "$subdir/$file" "$binPath/$linkName" || { echo "Failed to link $file"; continue; }
   done

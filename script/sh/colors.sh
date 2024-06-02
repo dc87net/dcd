@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/usr/bin/env bash
 ## Copyright 2024 - DC87 Solutions LLC. All rights reserved.
 #### *** IMPORTANT *** #####
 ## Include this using `source` for some ASCII colors ONLY!
@@ -83,7 +83,7 @@ enableLogging(){
 ## Function to log text with a leading marker (color: $LINECOLOR)
 #  cat <<< "$@" | tee -a "$logFile"
 log(){
-  echo -e "${!LINECOLOR}==>  ${NC}$*" # | tee -a "$logFile"
+  eval "echo -e \"\${$LINECOLOR}==>  ${NC}$*\""
 }
 
 ## Demo code
@@ -94,6 +94,8 @@ demoColoredText(){
   }
 }
 
+log "test of log"
+log "Params: $*"
 
 # Comment out the below line to completely disable the demo feature
 #demoColoredText $#
