@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 ## Copyright 2024 - DC87 Solutions LLC. All rights reserved.
 #### *** IMPORTANT *** #####
 ## Include this **ONLY** using `source`, for ASCII color table!
@@ -42,13 +42,6 @@ export NC='\033[0m'
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 ")
 
-## Function to log text with a leading marker (color: $LINECOLOR)
-#  cat <<< "$@" | tee -a "$logFile"
-log(){
-  eval "echo -e \"\${$LINECOLOR}==>  ${NC}$*\""
-}
-
-
 ############################
 ## Function to print the color table, as __executable__ script text
 _COLORS2ENV(){
@@ -63,19 +56,31 @@ eval "$(_COLORS2ENV)"
 _COLORS(){
   exec zsh
 }
+
+## Function to log text with a leading marker (color: $LINECOLOR)
+#  cat <<< "$@" | tee -a "$logFile"
+log(){
+  eval "echo -e \"\${$LINECOLOR}==>  ${NC}$*\""
+}
+
+
 #if [[ $1 ]];then log "params $*"; fi
 params="$*"
+#echo -e "\tPARAMS: $*"
 if [[ $params == "colors get" ]]; then _COLORS2ENV; fi
 if [[ $params == "colors colors" ]]; then
     log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
     _COLORS
 fi
 # additional help: `dcd colors help`
-if [[ "$*" == "help" ]]; then
+if [[ "$params" == "help" ]]; then
     log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table ${MAGENTA}source${NC}-able code"
     exit 0
 fi
+
 ##--------------------------------------------------------------
+
+
 
 enableLogging(){
   # Logging, if applicable
@@ -134,3 +139,10 @@ demoColoredText(){
 #MAGENTA='\033[0;35m'
 #NC='\033[0m' # No Color";
 #}
+
+
+
+#### WORKS!!
+#
+#╰─ cat /opt/script/dcd | base64                                                                  ─╯
+#IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=

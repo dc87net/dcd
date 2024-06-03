@@ -37,17 +37,11 @@ thisPath=$output
 echo -ne "\r                                             \r";
 log "SELF:\t ${CYAN}$thisPath${NC}"
 
-sleep 0.5
+sleep 0.4
 thisPath="$(dirname $(realpath $thisPath))"
-<<<<<<< Updated upstream
-log "REAL:\t ${RED}$thisPath${NC}"
-sleep 0.5
-log "basePath:\t $basePath"
-sleep 1
-=======
+sleep 0.4
 log "real:\t ${RED}$thisPath${NC}"
 log "basePath:\t ${CYAN}$basePath${NC}"
->>>>>>> Stashed changes
 
 mkdir -p "$basePath"
 copyPath="$(dirname $basePath)"
@@ -97,51 +91,42 @@ updateFile 'UEFUSD0vb3B0L3NjcmlwdDokUEFUSAo='
 updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 
 
-<<<<<<< Updated upstream
 ## SECTION 3: CLEAN-UP & STAGING
 # Write `dcd`
 log "Writing ${BCYAN}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
-echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyQqIgo=' | base64 -d > "$basePath/dcd"
-=======
-# Write the updated content back to .zshrc
-{
-  echo "$filteredProfile"
-  echo "$newPath"
-} > "$currentProfile.tmp"
+echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=' | base64 -d > "$basePath/dcd"
 
-# Move the temp file to .zshrc
-mv "$currentProfile.tmp" "$currentProfile"
-
-echo -ne " ${YELLOW2}└──╼${NC}  ${RED}FINAL${NC}: OK" #${BLUE2}
+echo -ne " ${YELLOW2}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}"! #${BLUE2}
 cat "$currentProfile"
 echo -e "${NC}"
 echo ''
+log "Setting ${BCYAN}dcd${NC} permissions..."
+chmod 755 "$basePath/dcd"
 
-echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
+### UNCOMMENT LATER AND FIX
+#echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
 #(cat ~/.zshrc | grep -v
 #YWxpYXMgY2RycD0nZXZhbCBjZCBcIi9Vc2Vycy9TaGFyZWQvc2NyaXB0XCInCg==
 
-echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpldmFsIGJhc2ggLWMgL29wdC9zY3JpcHQvYmluLyRACg==' | base64 -d > "$basePath/dcd"
->>>>>>> Stashed changes
-chmod 755 "$basePath/dcd"
+
 
 # Fix perms on the install directory
-log "Updating permissions..."
+log "Updating ${CYAN}$basePath${NC} permissions..."
 sudo chown -R "$user" "$basePath"
 chmod -R 755 "$basePath"
 
 ## Notify: Install complete
 log "Installation ${BGREEN}COMPLETE${NC}!"
 log "TREE:"
-tree "$basePath" || log "${RED}tree${NC} not installed..."
+tree "$basePath" || log "${YELLOW}tree${NC} not installed..."
 echo;
 
 # Switch to the specified user and start a new login shell, replacing the current shell
-
-echo
-log "Log File"
-log '--------'
-cat "$logFile"
-rm -f "$logFile"
+#
+#echo
+#log "Log File"
+#log '--------'
+#cat "$logFile"
+#rm -f "$logFile"
 
 exec su - $user -c "exec zsh"

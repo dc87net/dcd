@@ -3,6 +3,9 @@
 /.idea/
 /bin/*
 **/.*
+/priv/*
 
 *.out
 script/sh/gptPathScript.sh
+
+
