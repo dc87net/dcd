@@ -39,10 +39,15 @@ log "SELF:\t ${CYAN}$thisPath${NC}"
 
 sleep 0.5
 thisPath="$(dirname $(realpath $thisPath))"
+<<<<<<< Updated upstream
 log "REAL:\t ${RED}$thisPath${NC}"
 sleep 0.5
 log "basePath:\t $basePath"
 sleep 1
+=======
+log "real:\t ${RED}$thisPath${NC}"
+log "basePath:\t ${CYAN}$basePath${NC}"
+>>>>>>> Stashed changes
 
 mkdir -p "$basePath"
 copyPath="$(dirname $basePath)"
@@ -65,14 +70,14 @@ echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
 # Enumerate the utility subdirectories (organized by type)
 for dir in "${dirs[@]}"; do      # 🔴Enumerate the folders of script container directory
   subdir="$scriptsContainer/$dir"
-  log "${MAGENTA}Elaborating${NC}: ${RED}$subdir${NC}"
+  log "${MAGENTA}Elaborating${NC}: ${BYELLOW}$subdir${NC}"
   pushd "$subdir" > /dev/null || { echo "Failed to navigate to $subdir"; continue; }
 
   declare -a files=($(ls -F "$subdir" | grep '*' | awk -F'*' '{print $1}'))
   for file in "${files[@]}"; do  # 🔴Enumerate & link the scripts to the symlink dir
     linkName=$(echo "$file" | awk -F'.' '{print $1}')
     echo -ne " ${BYELLOW}└──╼${NC}  linking: ${CYAN}$file${NC} as ${GREEN}$linkName${NC}"
-    echo -ne "\t(${BLUE}$binPath/$linkName${NC})"
+    echo -ne "\t(${BBLUE}$binPath/$linkName${NC})"
     echo ""
     ln -s "$subdir/$file" "$binPath/$linkName" || { echo "Failed to link $file"; continue; }
   done
@@ -92,10 +97,32 @@ updateFile 'UEFUSD0vb3B0L3NjcmlwdDokUEFUSAo='
 updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 
 
+<<<<<<< Updated upstream
 ## SECTION 3: CLEAN-UP & STAGING
 # Write `dcd`
 log "Writing ${BCYAN}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
+echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyQqIgo=' | base64 -d > "$basePath/dcd"
+=======
+# Write the updated content back to .zshrc
+{
+  echo "$filteredProfile"
+  echo "$newPath"
+} > "$currentProfile.tmp"
+
+# Move the temp file to .zshrc
+mv "$currentProfile.tmp" "$currentProfile"
+
+echo -ne " ${YELLOW2}└──╼${NC}  ${RED}FINAL${NC}: OK" #${BLUE2}
+cat "$currentProfile"
+echo -e "${NC}"
+echo ''
+
+echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
+#(cat ~/.zshrc | grep -v
+#YWxpYXMgY2RycD0nZXZhbCBjZCBcIi9Vc2Vycy9TaGFyZWQvc2NyaXB0XCInCg==
+
 echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpldmFsIGJhc2ggLWMgL29wdC9zY3JpcHQvYmluLyRACg==' | base64 -d > "$basePath/dcd"
+>>>>>>> Stashed changes
 chmod 755 "$basePath/dcd"
 
 # Fix perms on the install directory
@@ -110,4 +137,11 @@ tree "$basePath" || log "${RED}tree${NC} not installed..."
 echo;
 
 # Switch to the specified user and start a new login shell, replacing the current shell
+
+echo
+log "Log File"
+log '--------'
+cat "$logFile"
+rm -f "$logFile"
+
 exec su - $user -c "exec zsh"

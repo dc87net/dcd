@@ -1,4 +1,4 @@
-#!/usr/bin/false
+#!/usr/bin/env bash
 ## Copyright 2024 - DC87 Solutions LLC. All rights reserved.
 #### *** IMPORTANT *** #####
 ## Include this **ONLY** using `source`, for ASCII color table!
@@ -42,6 +42,13 @@ export NC='\033[0m'
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 ")
 
+## Function to log text with a leading marker (color: $LINECOLOR)
+#  cat <<< "$@" | tee -a "$logFile"
+log(){
+  eval "echo -e \"\${$LINECOLOR}==>  ${NC}$*\""
+}
+
+
 ############################
 ## Function to print the color table, as __executable__ script text
 _COLORS2ENV(){
@@ -56,11 +63,10 @@ eval "$(_COLORS2ENV)"
 _COLORS(){
   exec zsh
 }
-
-if [[ "$*" == 'colors get' ]]; then
-  _COLORS2ENV;
-fi
-if [[ "$*" == "colors colors" ]]; then
+#if [[ $1 ]];then log "params $*"; fi
+params="$*"
+if [[ $params == "colors get" ]]; then _COLORS2ENV; fi
+if [[ $params == "colors colors" ]]; then
     log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
     _COLORS
 fi
@@ -82,12 +88,6 @@ enableLogging(){
   }
 }
 
-## Function to log text with a leading marker (color: $LINECOLOR)
-#  cat <<< "$@" | tee -a "$logFile"
-log(){
-  echo -e "${!LINECOLOR}==>  ${NC}$*" # | tee -a "$logFile"
-}
-
 ## Demo code
 demoColoredText(){
   [ $1 -lt 1 ] && { # if there are no args passed into the script
@@ -96,6 +96,12 @@ demoColoredText(){
   }
 }
 
+
+
+
+
+#log "test of log"
+#log "Params: $*"
 
 # Comment out the below line to completely disable the demo feature
 #demoColoredText $#
