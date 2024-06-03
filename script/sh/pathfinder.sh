@@ -1,4 +1,5 @@
 #!/bin/bash
+## Outputs the fully qualified, resolved PATH of the current script
 
 getScriptPath(){
 #  echo -e "$0"
@@ -11,4 +12,8 @@ getScriptPath(){
   exit 0
 }
 
-getScriptPath
+[ -$# -gt 0 ] && {
+
+} || {
+  getScriptP
+}

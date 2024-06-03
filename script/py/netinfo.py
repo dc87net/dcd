@@ -25,8 +25,8 @@ for i in $activeInterfaces
 do
   interface=$i
   hardware_port=$(networksetup -listallhardwareports | grep -B1 "Device: $i" | awk -F ": " '/Hardware Port/{print $2}')
-  ipV4="$(ifconfig $i | grep 'inet ' | awk '{print $2}')"
-  ipV6="$(ifconfig $i | grep inet6 | awk '{print $2}' | cut -d'%' -f1)"
+  ipV4="$(ifconfig $i | grep -w inet | awk '{print $2}')"
+  ipV6="$(ifconfig $i | grep inet6 | awk '{print $2}' | cut -d'%' -f1 | head -n 1)"
 
   # Adjust the column widths as needed
   printf "%-5s %-25s %-20s %-40s\n" "$i" "'$hardware_port'" "$ipV4" "$ipV6"
