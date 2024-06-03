@@ -1,7 +1,7 @@
 #!/usr/bin/false
 ## Copyright 2024 - DC87 Solutions LLC. All rights reserved.
 #### *** IMPORTANT *** #####
-## Include this using `source` for some ASCII colors ONLY!
+## Include this **ONLY** using `source`, for ASCII color table!
 ##
 ## TO IMPORT THE COLOR TABLE INTO THE ENVIRONMENT:
 ##   dcd colors
@@ -57,13 +57,15 @@ _COLORS(){
   exec zsh
 }
 
-if [[ $1 == 'get' ]]; then _COLORS2ENV; fi
-if [[ $1 == "colors" ]]; then
+if [[ "$*" == 'colors get' ]]; then
+  _COLORS2ENV;
+fi
+if [[ "$*" == "colors colors" ]]; then
     log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
     _COLORS
 fi
 # additional help: `dcd colors help`
-if [[ $1 == "help" ]]; then
+if [[ "$*" == "help" ]]; then
     log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table ${MAGENTA}source${NC}-able code"
     exit 0
 fi
