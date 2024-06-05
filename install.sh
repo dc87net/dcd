@@ -70,8 +70,8 @@ for dir in "${dirs[@]}"; do      # 🔴Enumerate the folders of script container
   declare -a files=($(ls -F "$subdir" | grep '*' | awk -F'*' '{print $1}'))
   for file in "${files[@]}"; do  # 🔴Enumerate & link the scripts to the symlink dir
     linkName=$(echo "$file" | awk -F'.' '{print $1}')
-    echo -ne " ${BYELLOW}└──╼${NC}  linking: ${CYAN}$file${NC} as ${GREEN}$linkName${NC}"
-    echo -ne "\t(${BBLUE}$binPath/$linkName${NC})"
+    echo -ne " ${BYELLOW}└──╼${NC}  linking: ${CYAN}$file${NC} as ${BCYAN}$linkName${NC}"
+    echo -ne "\t(${BLUE}$binPath/$linkName${NC})"
     echo ""
     ln -s "$subdir/$file" "$binPath/$linkName" || { echo "Failed to link $file"; continue; }
   done
@@ -96,12 +96,12 @@ updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 log "Writing ${BCYAN}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
 echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=' | base64 -d > "$basePath/dcd"
 
-echo -ne " ${YELLOW2}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}"! #${BLUE2}
-cat "$currentProfile"
+echo -ne " ${YELLOW2}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}!" #${BLUE2}
+#cat "$currentProfile"
 echo -e "${NC}"
 echo ''
-log "Setting ${BCYAN}dcd${NC} permissions..."
-chmod 755 "$basePath/dcd"
+log "Setting ${BCYAN}dcd${NC} permissions: ${BGREEN}755${NC} -R ${CYAN}$basePath/dcd${NC}"
+chmod -R 755 "$basePath/dcd"
 
 ### UNCOMMENT LATER AND FIX
 #echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
@@ -118,8 +118,9 @@ chmod -R 755 "$basePath"
 ## Notify: Install complete
 log "Installation ${BGREEN}COMPLETE${NC}!"
 log "TREE:"
-tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
-log <<<  "$(echo $tcmd | base64 -d)"
+#tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
+#log <<<  "$(echo $tcmd | base64 -d)"
+tree "$basePath"
 echo;
 
 # Switch to the specified user and start a new login shell, replacing the current shell

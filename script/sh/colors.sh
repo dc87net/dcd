@@ -72,6 +72,10 @@ if [[ $params == "colors colors" ]]; then
     log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
     _COLORS
 fi
+if [[ $params == "colors full" ]]; then
+  :
+  cat
+fi
 # additional help: `dcd colors help`
 if [[ "$params" == "help" ]]; then
     log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table ${MAGENTA}source${NC}-able code"
