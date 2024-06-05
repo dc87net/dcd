@@ -1,0 +1,1 @@
+ res1="$(cat <<< $(apt upgrade -y))"; echo "$res1"
