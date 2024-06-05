@@ -40,24 +40,24 @@ log "SELF:\t ${CYAN}$thisPath${NC}"
 sleep 0.4
 thisPath="$(dirname $(realpath $thisPath))"
 sleep 0.4
-log "real:\t ${RED}$thisPath${NC}"
-log "basePath:\t ${CYAN}$basePath${NC}"
+log "realPath:\t ${RED}$thisPath${NC}"
+log "basePath:\t ${BCYAN}$basePath${NC}"
 
 mkdir -p "$basePath"
 copyPath="$(dirname $basePath)"
-log "COPYING: <$thisPath> to <$copyPath/>"
+log "COPYING: <${CYAN}$thisPath${NC}> to <${BCYAN}$copyPath/${NC}>"
 sudo cp -R "$thisPath" "$copyPath" || exit -2
 cd "$basePath" || exit -1
 
 # Get list of subdirectories
 declare -a dirs=($(ls -F "$scriptsContainer" | grep '/' | awk '{print $1}'))
-log "${GREEN}scriptsContainer${NC}:\t $scriptsContainer"
+log "${BCYAN}scriptsContainer${NC}:\t $scriptsContainer"
 
 # Remove and recreate the symlink folder
 binPath="$basePath/bin"
 rm -rf "$binPath"
 mkdir -p "$binPath" > /dev/null 2>&1
-log "symlinks @:\t ${CYAN}$binPath${NC}";
+log "SYMLINKS @\t ${BCYAN}$binPath${NC}";
 sleep 0.4
 
 echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
@@ -118,7 +118,8 @@ chmod -R 755 "$basePath"
 ## Notify: Install complete
 log "Installation ${BGREEN}COMPLETE${NC}!"
 log "TREE:"
-tree "$basePath" || log "${YELLOW}tree${NC} not installed..."
+tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
+log <<<  "$(echo $tcmd | base64 -d)"
 echo;
 
 # Switch to the specified user and start a new login shell, replacing the current shell
