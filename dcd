@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+source "/opt/script/etc/colors.sh"
+
+CMD="$1"; shift
+ARGS="$*"
+log "C:<$CMD>\t A:<$ARGS>"; echo;
+
+(exec eval '/opt/script/bin/"$CMD" "$ARGS"')

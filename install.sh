@@ -94,14 +94,15 @@ updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 ## SECTION 3: CLEAN-UP & STAGING
 # Write `dcd`
 log "Writing ${BCYAN}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
-echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=' | base64 -d > "$basePath/dcd"
+#echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=' | base64 -d > "$basePath/dcd"
+cp ./dcd /opt/script
 
 echo -ne " ${YELLOW2}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}!" #${BLUE2}
 #cat "$currentProfile"
 echo -e "${NC}"
 echo ''
-log "Setting ${BCYAN}dcd${NC} permissions: ${BGREEN}755${NC} -R ${CYAN}$basePath/dcd${NC}"
-chmod -R 755 "$basePath/dcd"
+log "Setting ${BCYAN}dcd${NC} permissions: ${BGREEN}755${NC} ${CYAN}$basePath/dcd${NC}"
+chmod -755 "$basePath/dcd"
 
 ### UNCOMMENT LATER AND FIX
 #echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
@@ -117,7 +118,7 @@ chmod -R 755 "$basePath"
 
 ## Notify: Install complete
 log "Installation ${BGREEN}COMPLETE${NC}!"
-log "TREE:"
+log "TREE:\n"
 #tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
 #log <<<  "$(echo $tcmd | base64 -d)"
 tree "$basePath"

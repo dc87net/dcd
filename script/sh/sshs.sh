@@ -9,5 +9,7 @@ source "$res1/etc/colors.sh"
 
 # Establish session
 
-[[ $* ]] && log "RSA SSH:  ${BYELLOW}$*${NC}" || exit -1
-ssh -4 -c aes256-cbc,aes256-ctr,aes256-gcm@openssh.com -o HostKeyAlgorithms=rsa-sha2-512,rsa-sha2-256 \'"$*"\'
+params="$*"
+
+[[ "$*" ]] && log "RSA SSH:  ${BYELLOW}$*${NC}" || exit -1
+ssh -4 -c aes256-cbc,aes256-ctr,aes256-gcm@openssh.com -o HostKeyAlgorithms='rsa-sha2-512,rsa-sha2-256' "$*"
