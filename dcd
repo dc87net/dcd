@@ -2,8 +2,13 @@
 
 source "/opt/script/etc/colors.sh"
 
+# Make sure there was a scriptlet specificed
+[[ -z "$1" ]] && exit -100
+
+# Parse args
 CMD="$1"; shift
 ARGS="$*"
-log "C:<$CMD>\t A:<$ARGS>"; echo;
+#log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
 
+# Run the scriptlet
 (exec eval '/opt/script/bin/"$CMD" "$ARGS"')

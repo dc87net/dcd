@@ -13,21 +13,21 @@
 ## as *--->  $LOGFILE  <---*
 export LOGFILE="$LOGPATH/$LOGFNAME";
 export LOGENABLE=0
-export LINECOLOR='YELLOW' # Color of `log` indicator
+export LINECOLOR='BYELLOW' # Color of `log` indicator
 
 ## Color constant table
 readonly colorString=$(cat <<< "
 ## ╔═══════════════════════╗
 ## ║ ## COLOR CONSTANTS ## ║
 ## ╚═══════════════════════╝
-export BLACK='\033[0;30m'
-export BLUE='\033[0;34m'
-export CYAN='\033[0;36m'
-export GREEN='\033[0;32m'
-export MAGENTA='\033[0;35m'
-export RED='\033[0;31m'
-export WHITE='\033[0;37m'
-export YELLOW='\033[0;33m'
+export BLACK='\033[0;30m'   # BLACK
+export BLUE='\033[0;34m'    # BLUE
+export CYAN='\033[0;36m'    # CYAN
+export GREEN='\033[0;32m'   # GREEN
+export MAGENTA='\033[0;35m' # MAGENTA
+export RED='\033[0;31m'     # RED
+export WHITE='\033[0;37m'   # WHITE
+export YELLOW='\033[0;33m'  # YELLOW
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 export BBLACK='\033[0;90m'   # Bright Black (Gray)
 export BBLUE='\033[0;94m'    # Bright Blue
@@ -47,6 +47,7 @@ export NC='\033[0m'
 _COLORS2ENV(){
   cat <<< "$colorString"
 }
+
 ### **IMPORTANT**: Actually add Color Table to the env [NEXT STATEMENT];
 ###    **DO NOT REMOVE**
 eval "$(_COLORS2ENV)"
@@ -76,13 +77,17 @@ if [[ $params == "colors full" ]]; then
   :
   cat
 fi
+if [[ $params == "colors log" ]]; then
+  # _COLORS2ENV
+  (exec eval base64 -d -i - <<< 'IyEvdXNyL2Jpbi9lbnYgYmFzaAoKcmVzMT0iJChkY2QgY29sb3JzIGdldCkiCiNldmFsICIkKGRjZCBjb2xvcnMgZ2V0KSIKZXZhbCAiJHJlczEiCgpMSU5FQ09MT1I9J1lFTExPVycJIyBjb2xvciBuYW1lIGFzIHRleHQgKG5vdCBhcyBjb2xvciB2YXJpYWJsZSkKCgpsb2coKXsKICBldmFsICJlY2hvIC1lIFwiXCR7JExJTkVDT0xPUn09PT4gICR7TkN9JCpcIiIKfQo=')
+fi
 # additional help: `dcd colors help`
-if [[ "$params" == "help" ]]; then
+if [[ "$params" == "colors help" ]]; then
     log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table ${MAGENTA}source${NC}-able code"
     exit 0
 fi
 
-##--------------------------------------------------------------
+'--------------------------------------------------------------' 2>&1 /dev/null
 
 
 
@@ -106,17 +111,12 @@ demoColoredText(){
 }
 
 
-
-
-
-#log "test of log"
-#log "Params: $*"
-
 # Comment out the below line to completely disable the demo feature
 #demoColoredText $#
 #log "Cmd:\t${RED} $0${NC}${BCYAN} $* ${NC}"
 #eval "$(_COLORS2ENV)"
 #log "CMD:\t${RED}$0 ${BCYAN}$*${NC}"
+
 
 ## main() for  this script [runs if called as executable `colors`]
 #if [ "$0" == "colors" ] or [ "$1" == "colors" ]; then
@@ -128,23 +128,7 @@ demoColoredText(){
 #  exec "zsh" -i
 #fi
 
-
-
-###### SCRATCH ###### ###### SCRATCH ###### ###### SCRATCH ###### ###### SCRATCH ######
-#printColors(){
-###
-#  cat <<< "RED='\033[0;31m'
-#BLUE='\033[0;34m'
-#BLUE2='\033[0;94m'
-#CYAN='\033[0;36m'
-#GREEN='\033[0;92m'
-#YELLOW='\033[0;93m'
-#YELLOW2='\033[0;33m'
-#MAGENTA='\033[0;35m'
-#NC='\033[0m' # No Color";
-#}
-
-
+# -----
 
 #### WORKS!!
 #

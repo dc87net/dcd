@@ -24,10 +24,10 @@ updateFile(){
 
 ## SECTION 1: PREPARE & INSTALL
 # Print welcome message
-echo -ne "${YELLOW}══════ ***-> Hang On... <-*** ══════${NC}"
+echo -ne "${YELLOW}══════ ***-> Hang On...! <-*** ══════${NC}"
 sudo rm -rf "$basePath"
 # Copy to the install path
-## Get the true path:
+## Get the true path of this install script:
 lsofOutput="$(lsof | grep "$0" | awk '{print $NF}')"
 output="$lsofOutput"
 if [[ $lsofOutput == "" ]]; then
@@ -47,6 +47,7 @@ mkdir -p "$basePath"
 copyPath="$(dirname $basePath)"
 log "COPYING: <${CYAN}$thisPath${NC}> to <${BCYAN}$copyPath/${NC}>"
 sudo cp -R "$thisPath" "$copyPath" || exit -2
+rm -rf "$copyPath/.git" || log "${RED}Failed to remove <${BRED}$copyPath/.git${NC}>"; exit -2
 cd "$basePath" || exit -1
 
 # Get list of subdirectories
