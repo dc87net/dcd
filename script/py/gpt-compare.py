@@ -1,1 +1,0 @@
-../../gpt/compare.py

@@ -47,7 +47,7 @@ mkdir -p "$basePath"
 copyPath="$(dirname $basePath)"
 log "COPYING: <${CYAN}$thisPath${NC}> to <${BCYAN}$copyPath/${NC}>"
 sudo cp -R "$thisPath" "$copyPath" || exit -2
-rm -rf "$copyPath/.git" || log "${RED}Failed to remove <${BRED}$copyPath/.git${NC}>"; exit -2
+rm -rf "$copyPath/.git" || log "${RED}Failed to remove <${BRED}$copyPath/.git${NC}>"
 cd "$basePath" || exit -1
 
 # Get list of subdirectories
@@ -103,7 +103,7 @@ echo -ne " ${YELLOW2}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}!" 
 echo -e "${NC}"
 echo ''
 log "Setting ${BCYAN}dcd${NC} permissions: ${BGREEN}755${NC} ${CYAN}$basePath/dcd${NC}"
-chmod -755 "$basePath/dcd"
+chmod 755 "$basePath/dcd"
 
 ### UNCOMMENT LATER AND FIX
 #echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
