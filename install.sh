@@ -9,13 +9,14 @@ export basePath='/opt/script'
 export scriptsContainer="$basePath/script"
 export user
 
+
 ## SECTION 0: HELPER FUNCTIONS
 updateFile(){
   local base64String="$1"
   local appendLine=$(echo "$base64String" | base64 -d)
   local output=$(grep -Fv "$appendLine" "$outFile")
 
-  echo -e " ${BYELLOW}└──╼${NC}  ${RED}Append: $outFile${NC}:\t${CYAN}$appendLine${NC}"
+  echo -e " ${BYELLOW}└──╼${NC}  ${RED}Append: $outFile${NC}:  ${CYAN}$appendLine${NC}"
 
   printf "%s\n" "$output" > "$outFile"
   echo "$appendLine" >> "$outFile"
@@ -38,13 +39,13 @@ echo -ne "\r                                             \r";
 log "SELF:\t ${CYAN}$thisPath${NC}"
 
 sleep 0.4
-thisPath="$(dirname $(realpath $thisPath))"
+export thisPath="$(dirname $(realpath $thisPath))"    ## THISPATH
 sleep 0.4
-log "realPath:\t ${RED}$thisPath${NC}"
-log "basePath:\t ${BCYAN}$basePath${NC}"
+log "thisPath/real:  ${RED}$thisPath${NC}"
+log "basePath:     ${BCYAN}$basePath${NC}"
 
 mkdir -p "$basePath"
-copyPath="$(dirname $basePath)"
+export copyPath="$(dirname $basePath)"                 ## COPYPATH
 log "COPYING: <${CYAN}$thisPath${NC}> to <${BCYAN}$copyPath/${NC}>"
 sudo cp -R "$thisPath" "$copyPath" || exit -2
 rm -rf "$copyPath/.git" || log "${RED}Failed to remove <${BRED}$copyPath/.git${NC}>"
@@ -63,13 +64,13 @@ sleep 0.4
 
 echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
 # Enumerate the utility subdirectories (organized by type)
-for dir in "${dirs[@]}"; do      # 🔴Enumerate the folders of script container directory
+for dir in "${dirs[@]}"; do      # 🔴 Enumerate the folders of script container directory
   subdir="$scriptsContainer/$dir"
   log "${MAGENTA}Elaborating${NC}: ${BYELLOW}$subdir${NC}"
   pushd "$subdir" > /dev/null || { echo "Failed to navigate to $subdir"; continue; }
 
   declare -a files=($(ls -F "$subdir" | grep '*' | awk -F'*' '{print $1}'))
-  for file in "${files[@]}"; do  # 🔴Enumerate & link the scripts to the symlink dir
+  for file in "${files[@]}"; do  # 🔴 Enumerate & link the scripts to the symlink dir
     linkName=$(echo "$file" | awk -F'.' '{print $1}')
     echo -ne " ${BYELLOW}└──╼${NC}  linking: ${CYAN}$file${NC} as ${BCYAN}$linkName${NC}"
     echo -ne "\t(${BLUE}$binPath/$linkName${NC})"
@@ -84,7 +85,7 @@ log "COPY ${BGREEN}COMPLETE${NC}!"
 ## SECTION 2: UPDATE ZSH PROFILE
 # Identify the currently logged-in User
 user="$(who | grep console | awk '{print $1}')"
-echo -e "${YELLOW}==>${NC} USER:\t${MAGENTA}$user${NC}"
+echo -e "${BYELLOW}==> ${MAGENTA}USER:  ${BMAGENTA}$user${NC}"
 export outFile="/Users/$user/.zshrc"
 
 # Update current .zshrc (while preventing duplicate entries)
@@ -117,15 +118,39 @@ log "Updating ${CYAN}$basePath${NC} permissions..."
 sudo chown -R "$user" "$basePath"
 chmod -R 755 "$basePath"
 
+# Ensure `defaults` are set
+configPlist="/opt/script/config"
+touch "${configPlist}.plist"
+chmod 777 "${configPlist}.plist"  ##TODO: FIX THIS!
+
+if [[ -$(defaults read /opt/script/config installFrom 2>/dev/null | wc -l | awk '{print $1}') -eq 0 ]]; then # installFrom NOT set
+  log "${BRED}Setting ${CYAN}defaults${NC}: ${BMAGENTA}installFrom${NC}  --> ${BCYAN}$thisPath${NC}"
+  defaults write ${configPlist} installFrom "${thisPath}"; else
+    log "${BGREEN}OK - ${MAGENTA}installFrom${NC} --> ${BGREEN}$(defaults read /opt/script/config installFrom)${NC}"; fi
+
+if [[ -$(defaults read /opt/script/config installTo   2>/dev/null | wc -l | awk '{print $1}') -eq 0 ]]; then   # installTo NOT set
+  log "${BRED}Setting ${CYAN}defaults${NC}: ${BMAGENTA}installTo  ${NC}  --> ${BCYAN}$basePath${NC}"
+  defaults write $configPlist installTo ${basePath}; else
+    log "${BGREEN}OK - ${MAGENTA}installTo${NC}   --> ${BGREEN}$(defaults read /opt/script/config installTo)${NC}"; fi
+chmod 777 "$configPlist.plist"
+log "❓ ${RED}FROM${NC}: ${BYELLOW}$(defaults read /opt/script/config installFrom)${NC}\t ${RED}TO${NC}:"\
+    "${BYELLOW}$(defaults read /opt/script/config installTo)${NC}"
+
 ## Notify: Install complete
-log "Installation ${BGREEN}COMPLETE${NC}!"
-log "TREE:\n"
+log "Installation ${BGREEN}COMPLETE${NC}!";
+echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
+
+# Draw the finalized directory tree of the install destination
+log "TREE:"
 #tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
 #log <<<  "$(echo $tcmd | base64 -d)"
 tree "$basePath"
 echo;
 
 # Switch to the specified user and start a new login shell, replacing the current shell
+exec su - $user -c "exec zsh"
+
+
 #
 #echo
 #log "Log File"
@@ -133,4 +158,4 @@ echo;
 #cat "$logFile"
 #rm -f "$logFile"
 
-exec su - $user -c "exec zsh"
+

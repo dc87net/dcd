@@ -68,16 +68,16 @@ log(){
 #if [[ $1 ]];then log "params $*"; fi
 params="$*"
 #echo -e "\tPARAMS: $*"
-if [[ $params == "colors get" ]]; then _COLORS2ENV; fi
-if [[ $params == "colors colors" ]]; then
+if [[ $params == "get" ]]; then _COLORS2ENV; fi
+if [[ $params == "colors" ]]; then
   _COLORS2ENV
   log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
   _SHELL
 fi
-if [[ $params == "colors test" ]]; then
+if [[ $params == "test" ]]; then
   echo "$(dcd colors get)"
 fi
-if [[ $params == "colors log" ]]; then
+if [[ $params == "log" ]]; then
   (exec eval base64 -d -i - <<< 'IyEvdXNyL2Jpbi9lbnYgYmFzaAoKcmVzMT0iJChkY2QgY29sb3JzIGdldCkiCiNldmFsICIkKGRjZCBjb2xvcnMgZ2V0KSIKZXZhbCAiJHJlczEiCgpMSU5FQ09MT1I9J1lFTExPVycJIyBjb2xvciBuYW1lIGFzIHRleHQgKG5vdCBhcyBjb2xvciB2YXJpYWJsZSkKCgpsb2coKXsKICBldmFsICJlY2hvIC1lIFwiXCR7JExJTkVDT0xPUn09PT4gICR7TkN9JCpcIiIKfQo=')
 fi
 # additional help: `dcd colors help`
@@ -85,6 +85,8 @@ if [[ "$params" == "colors help" ]]; then
     log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table ${MAGENTA}source${NC}-able code"
     exit 0
 fi
+
+
 
 #'--------------------------------------------------------------' 2>&1 /dev/null
 
