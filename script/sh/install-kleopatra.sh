@@ -17,7 +17,7 @@ brew install algertc/kleopatra4mac/kleopatra
 ###################
 ## Apple Silicon ##
 ###################
-uname -a |
+[[ $(uname -p) == "arm" ]] || exit -1
 
 #- Start DBUS
 brew services start dbus
@@ -31,7 +31,7 @@ source ~/.zshrc
 
 #- Add Kleopatra to launchpad
 cd /Applications && unzip /opt/homebrew/opt/kleopatra/app.zip
-echo 'export PATH="/Applications/'
+#echo 'export PATH="/Applications/'
 
 ##- Kleopatra is keg-only, which means it was not symlinked into `/opt/homebrew` to prevent conflicts; fix:
 #export LDFLAGS="-L/opt/homebrew/opt/kleopatra/lib"
