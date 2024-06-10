@@ -7,7 +7,8 @@ import csv
 import subprocess
 from datetime import datetime
 
-import colors # custom colors for python
+from script.py import colors
+
 
 def getDefaultPath(defaultKey):
     try:

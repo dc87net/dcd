@@ -45,8 +45,8 @@ def compareDatabases(dbPathA, dbPathB):
         print(f"- {convo_id} (Created on: {conversationsB[convo_id]})")
 
 def main():
-    dbPathA = input("Path to database file A: ").strip()
-    dbPathB = input("Path to database file B: ").strip()
+    dbPathA = input("Path to database file 'A': ").strip()
+    dbPathB = input("Path to database file 'B': ").strip()
 
     compareDatabases(dbPathA, dbPathB)
 

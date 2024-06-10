@@ -25,8 +25,8 @@ REVERSED    = '\033[7m'
 
 
 # Reset
-NC     = '\033[0m'      # No Color
-NORMAL = '\033[0m'      # Reset all styles to normal (equivalent to NC)
+NC     = '\033[0m'  # No Color
+NORMAL = NC         # Reset all styles to normal (equivalent to NC)
 
 def test():
     # Demonstrating colored output
@@ -67,4 +67,5 @@ def test():
     print(f"{REVERSED}This is reversed text{NORMAL}")
 
 
-test()
+if __name__ == "__main__":
+    test()

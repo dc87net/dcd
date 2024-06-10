@@ -141,7 +141,7 @@ log "Installation ${BGREEN}COMPLETE${NC}!";
 echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
 
 # Draw the finalized directory tree of the install destination
-log "TREE:"
+log "${BMAGENTA}TREE${NC}:"
 #tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
 #log <<<  "$(echo $tcmd | base64 -d)"
 tree "$basePath"
@@ -151,7 +151,7 @@ echo;
 exec su - $user -c "exec zsh"
 
 
-#
+##TODO: Implement Support: Log to file.
 #echo
 #log "Log File"
 #log '--------'

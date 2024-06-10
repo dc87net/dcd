@@ -26,7 +26,9 @@ echo "pinentry-program /opt/homebrew/bin/pinentry-mac" > ~/.gnupg/gpg-agent.conf
 killall -9 gpg-agent
 
 #- Modify PATH to find kleopatra
-echo 'export PATH="/opt/homebrew/opt/kleopatra/bin:$PATH"' >> ~/.zshrc
+# shellcheck disable=SC2016
+pathAdd='export PATH="/opt/homebrew/opt/kleopatra/bin:$PATH"'
+echo "$pathAdd" | grep -v "$pathAdd" >> ~/.zshrc
 source ~/.zshrc
 
 #- Add Kleopatra to launchpad
@@ -40,4 +42,4 @@ cd /Applications && unzip /opt/homebrew/opt/kleopatra/app.zip
 ##- For pkg-config to find Kleopatra, set:
 #export PKG_CONFIG_PATH="/opt/homebrew/opt/kleopatra/lib/pkgconfig"
 
-open /Applications/Kleopatra.app
+open /Applications/kleopatra.app
