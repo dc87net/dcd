@@ -7,11 +7,12 @@ from io import StringIO
 
 # Custom imports
 import colors
-log=f"{colors.BYELLOW}==>{colors.NC} {colors.BBLUE}"
+from colors import log
+#log=f"{colors.BYELLOW}==>{colors.NC} {colors.BBLUE}"
 
 def main():
-    print(f"{log}Enter your Python code. End with EOF "
-          f"({colors.RED}Ctrl+D{colors.BBLUE}){colors.NC}:")
+    log(f"{colors.BCYAN}python3{colors.CYAN} - [{colors.RED}Ctrl+D{colors.CYAN} to run{colors.CYAN}]{colors.BCYAN}"
+        f"  >>>{colors.NC} ")
 
     # Capture the input code from the user
     input_code = sys.stdin.read()

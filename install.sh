@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-## Copyright 2024 Douglas Chiri, DC87 Solutions LLC. All rights reserved.
+## Copyright 2024 - Douglas C <dc87(dot)net(slash)dcd>; licenses are granted under GNU GPLv3. See `LICENSE` file.
 
 # Color constants
 source ./etc/colors.sh
@@ -21,6 +21,11 @@ updateFile(){
   printf "%s\n" "$output" > "$outFile"
   echo "$appendLine" >> "$outFile"
 }
+
+if [[ "$(whoami)" != 'root' ]]; then
+  echo -e "${BMAGENTA}==>${NC} Installation requires ${BRED}root${NC}\n\tUse: ${BCYAN}sudo bash install.sh${NC}"
+  exit 100
+fi;
 
 
 ## SECTION 1: PREPARE & INSTALL
@@ -95,11 +100,11 @@ updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 
 ## SECTION 3: CLEAN-UP & STAGING
 # Write `dcd`
-log "Writing ${BCYAN}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
+log "Writing ${BMAGENTA}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
 #echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=' | base64 -d > "$basePath/dcd"
 cp ./dcd /opt/script
 
-echo -ne " ${YELLOW2}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}!" #${BLUE2}
+echo -ne " ${YELLOW}└──╼${NC}  ${GREEN}FINAL${NC}:  ${BGREEN}OK${NC}!" #${BLUE2}
 #cat "$currentProfile"
 echo -e "${NC}"
 echo ''

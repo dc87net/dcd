@@ -1,3 +1,6 @@
+#!/usr=/bin/env python3
+##
+
 # Color Constants
 BLACK   = '\033[0;30m'
 BLUE    = '\033[0;34m'
@@ -19,14 +22,20 @@ BWHITE   = '\033[0;97m'
 BYELLOW  = '\033[0;93m'
 
 # Text styling
-BOLD        = '\033[1m'
-UNDERLINE   = '\033[4m'
-REVERSED    = '\033[7m'
-
+BOLD     = '\033[1m'
+UNDERLINE= '\033[4m'
+REVERSED = '\033[7m'
 
 # Reset
 NC     = '\033[0m'  # No Color
 NORMAL = NC         # Reset all styles to normal (equivalent to NC)
+'''##################################################################################################################'''
+
+
+HEAD=f"{BYELLOW}==>{NC} "    # << Prompt header for the log entry (one space included after the prompt)
+def log(TEXT=''):                   # << write the User-specified string to the console
+    print(f"{HEAD}{TEXT}")
+
 
 def test():
     # Demonstrating colored output
@@ -65,7 +74,6 @@ def test():
     print(f"{BWHITE}This is bright white text{NORMAL}")
     print(f"{BBLACK}This is bright black (gray) text{NORMAL}")
     print(f"{REVERSED}This is reversed text{NORMAL}")
-
 
 if __name__ == "__main__":
     test()
