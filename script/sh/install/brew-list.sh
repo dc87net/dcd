@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 ## Installs useful CLI tools and Applications on macOS
+## Invoke using `dcd install common`
 
 eval "$(dcd colors get)"
 eval "$(dcd colors log)"
@@ -17,6 +18,7 @@ neofetch
 screen
 parallel
 brave-browser
+watch
 "
 
 casks="

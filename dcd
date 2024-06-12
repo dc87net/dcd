@@ -12,9 +12,12 @@ ARGS="$*"
 #log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
 
 # Check for 'special' commands
-if [[ -$1 == -"install" ]]; then
+if [[ "$CMD" == "install" ]]; then
   log "${BMAGENTA}Special: ${CYAN}install: ${BCYAN}$2${NC}"
-  [[ -$2 == -"common" ]] && bash "$installTo/script/script/sh/brew-list.sh"
+
+  [[ "$ARGS" == "common" ]] && bash "$installTo/script/sh/install/brew-list.sh"
+
+  exit 0
 fi
 
 # Run the scriptlet
