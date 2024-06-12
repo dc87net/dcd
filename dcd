@@ -1,14 +1,21 @@
 #!/usr/bin/env zsh
 
-source "$(defaults read /opt/script/config.plist installTo)/etc/colors.sh"
-
 # Make sure there was a scriptlet specificed
 [[ -z "$1" ]] && exit -100
+
+installTo="$(defaults read /opt/script/config.plist installTo)"
+source "$installTo/etc/colors.sh"
 
 # Parse args
 CMD="$1"; shift
 ARGS="$*"
 #log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
+
+# Check for 'special' commands
+if [[ -$1 == -"install" ]]; then
+  log "${BMAGENTA}Special: ${CYAN}install: ${BCYAN}$2${NC}"
+  [[ -$2 == -"common" ]] && bash "$installTo/script/script/sh/brew-list.sh"
+fi
 
 # Run the scriptlet
 (exec eval '/opt/script/bin/"$CMD" "$ARGS"')

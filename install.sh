@@ -25,7 +25,7 @@ updateFile(){
 if [[ "$(whoami)" != 'root' ]]; then
   echo -e "${BMAGENTA}==>${NC} Installation requires ${BRED}root${NC}\n\tUse: ${BCYAN}sudo bash install.sh${NC}"
   exit 100
-fi;
+fi
 
 
 ## SECTION 1: PREPARE & INSTALL
@@ -41,12 +41,11 @@ if [[ $lsofOutput == "" ]]; then
 fi
 thisPath=$output
 echo -ne "\r                                             \r";
-log "SELF:\t ${CYAN}$thisPath${NC}"
-
+log "SELF:\t ${CYAN}$thisPath${NC}"		      ## THIS SCRIPT  (with name)
 sleep 0.4
-export thisPath="$(dirname $(realpath $thisPath))"    ## THISPATH
+export thisPath="$(dirname $(realpath $thisPath))"    ## THISPATH     (this scrip's path)
 sleep 0.4
-log "thisPath/real:  ${RED}$thisPath${NC}"
+log "thisPath/real:  ${RED}$thisPath${NC}"; cd "$thisPath" || exit -1
 log "basePath:     ${BCYAN}$basePath${NC}"
 
 mkdir -p "$basePath"
