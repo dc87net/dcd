@@ -22,6 +22,7 @@ brew install algertc/kleopatra4mac/kleopatra
 #- Start DBUS
 brew services start dbus
 #- Select pinentry-mac as the Default Program
+mkdir -p ~/.gnupg
 echo "pinentry-program /opt/homebrew/bin/pinentry-mac" > ~/.gnupg/gpg-agent.conf
 killall -9 gpg-agent
 

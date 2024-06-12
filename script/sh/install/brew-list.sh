@@ -19,6 +19,8 @@ screen
 parallel
 brave-browser
 watch
+python@3.12
+pyinstaller
 "
 
 casks="
