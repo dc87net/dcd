@@ -7,6 +7,7 @@ installTo="$(defaults read /opt/script/config.plist installTo)"
 eval "$(dcd colors get)"
 source "$installTo/bin/colors"
 
+log "${MAGENTA}$(date)${NC}"
 log "Beginning reinstallation..."
 cd "$installFrom" || exit -2  # make sure we are in the right place
 log "Switched to source directory!"

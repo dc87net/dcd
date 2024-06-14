@@ -6,9 +6,9 @@ eval "$(dcd colors get)"
 eval "$(dcd colors log)"
 exec 2>/dev/null
 
-[[ "$(uname)" == "Darwin" ]] || exit -1
+[[ "$(uname)" == "Darwin" ]] || exit -1;
 
-#### LIST ####r
+##### LIST #####
 formulae="
 htop
 iftop
@@ -21,6 +21,7 @@ brave-browser
 watch
 python@3.12
 pyinstaller
+dnscrypt-proxy
 "
 
 casks="
@@ -30,16 +31,33 @@ casks="
 --cask pycharm-ce
 --cask firefox
 --cask chromium
+--cask google-chrome
+--cask wireshark
+--cask gimp
 "
 ##############
 
+checkBrew(){
+  # Check for Homebrew
+  [[ -z "$(brew --prefix 2>/dev/null | wc -l | awk '{print $1}')" ]] && \
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+
+  (brew update && brew upgrade) || return 1;
+  brew cleanup;
+  brew doctor;
+
+  return 0;
+}
+
 # main
 main(){
-  log "${BMAGENTA}Installing${NC}: Common programs using ${GREEN}brew${NC}"
-  xargs brew install <<< $formulae
-  xargs brew install --cask <<< $casks
+  checkBrew || exit 1;
+
+  log "${BMAGENTA}Installing${NC}: Common programs using ${GREEN}brew${NC}";
+  xargs brew install <<< $formulae;
+  xargs brew install --cask <<< $casks;
   ##TODO: for each: xattr -c <InstalledApplication.app>
   ##TODO: -- can get InstalledApplication's Path using: `<install command> | awk -F"'" '{print $4}' of last line of the brew output`
 }
 
-main
+main;

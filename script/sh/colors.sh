@@ -70,9 +70,9 @@ params="$*"
 #echo -e "\tPARAMS: $*"
 if [[ $params == "get" ]]; then _COLORS2ENV; fi
 if [[ $params == "colors" ]]; then
-  _COLORS2ENV
+#  _COLORS2ENV
   log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
-  _SHELL
+  (exec eval "zsh <<< env")
 fi
 if [[ $params == "test" ]]; then
   echo "$(dcd colors get)"

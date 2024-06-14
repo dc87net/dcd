@@ -28,7 +28,7 @@ if [[ "$(whoami)" != 'root' ]]; then
 fi
 
 
-## SECTION 1: PREPARE & INSTALL
+#- SECTION 1: PREPARE & INSTALL
 # Print welcome message
 echo -ne "${YELLOW}══════ ***-> Hang On...! <-*** ══════${NC}"
 sudo rm -rf "$basePath"
@@ -66,6 +66,7 @@ mkdir -p "$binPath" > /dev/null 2>&1
 log "SYMLINKS @\t ${BCYAN}$binPath${NC}";
 sleep 0.4
 
+
 echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
 # Enumerate the utility subdirectories (organized by type)
 for dir in "${dirs[@]}"; do      # 🔴 Enumerate the folders of script container directory
@@ -86,7 +87,7 @@ done
 log "COPY ${BGREEN}COMPLETE${NC}!"
 
 
-## SECTION 2: UPDATE ZSH PROFILE
+#- SECTION 2: UPDATE ZSH PROFILE
 # Identify the currently logged-in User
 user="$(who | grep console | awk '{print $1}')"
 echo -e "${BYELLOW}==> ${MAGENTA}USER:  ${BMAGENTA}$user${NC}"
@@ -97,7 +98,7 @@ updateFile 'UEFUSD0vb3B0L3NjcmlwdDokUEFUSAo='
 updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 
 
-## SECTION 3: CLEAN-UP & STAGING
+#- SECTION 3: CLEAN-UP & STAGING
 # Write `dcd`
 log "Writing ${BMAGENTA}dcd${NC} executable to ${CYAN}$basePath/dcd${NC}"
 #echo 'IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=' | base64 -d > "$basePath/dcd"
@@ -114,8 +115,6 @@ chmod 755 "$basePath/dcd"
 #echo 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=' | base64 -d >> ~/.zshrc
 #(cat ~/.zshrc | grep -v
 #YWxpYXMgY2RycD0nZXZhbCBjZCBcIi9Vc2Vycy9TaGFyZWQvc2NyaXB0XCInCg==
-
-
 
 # Fix perms on the install directory
 log "Updating ${CYAN}$basePath${NC} permissions..."
