@@ -22,6 +22,7 @@ watch
 python@3.12
 pyinstaller
 dnscrypt-proxy
+mc
 "
 
 casks="
@@ -34,6 +35,8 @@ casks="
 --cask google-chrome
 --cask wireshark
 --cask gimp
+--cask xquartz
+--cask microsoft-remote-desktop
 "
 ##############
 
