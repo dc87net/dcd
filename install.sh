@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 ## Copyright 2024 - Douglas C <dc87(dot)net(slash)dcd>; licenses are granted under GNU GPLv3. See `LICENSE` file.
+## Installs `dcd` to $basePath; symlinks files in ./script marked u+x to $scriptsContainer
 
 # Color constants
 source ./etc/colors.sh
@@ -9,6 +10,8 @@ export basePath='/opt/script'
 export scriptsContainer="$basePath/script"
 export user
 
+
+log "$(date)"
 
 ## SECTION 0: HELPER FUNCTIONS
 updateFile(){
@@ -63,7 +66,7 @@ log "${BCYAN}scriptsContainer${NC}:\t $scriptsContainer"
 binPath="$basePath/bin"
 rm -rf "$binPath"
 mkdir -p "$binPath" > /dev/null 2>&1
-log "SYMLINKS @\t ${BCYAN}$binPath${NC}";
+log "${YELLOW}SYMLINKS${NC} @\t ${BCYAN}$binPath${NC}";
 sleep 0.4
 
 

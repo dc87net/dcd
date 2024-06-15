@@ -42,10 +42,13 @@ export NC='\033[0m'
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 ")
 
+readonly logString="$(echo 'bG9nKCl7CiAgZXZhbCAiZWNobyAtZSBcIlwkeyRMSU5FQ09MT1J9PT0+ICAke05DfSQqXCIiCn0K' | base64 -d)"
+
 ############################
 ## Function to print the color table, as __executable__ script text
 _COLORS2ENV(){
   cat <<< "$colorString"
+  cat <<< "$logString"
 }
 
 ### **IMPORTANT**: Actually add Color Table to the env [NEXT STATEMENT];
@@ -68,11 +71,11 @@ log(){
 #if [[ $1 ]];then log "params $*"; fi
 params="$*"
 #echo -e "\tPARAMS: $*"
-if [[ $params == "get" ]]; then _COLORS2ENV; fi
+if [[ $params == "get" ]]; then { _COLORS2ENV; } fi # cat <<< "$(dcd colors log)"; } fi
 if [[ $params == "colors" ]]; then
-#  _COLORS2ENV
+  _COLORS2ENV
   log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
-  (exec eval "zsh <<< env")
+  _SHELL #(exec eval "zsh <<< env")
 fi
 if [[ $params == "test" ]]; then
   echo "$(dcd colors get)"

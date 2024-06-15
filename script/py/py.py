@@ -24,16 +24,17 @@ def main():
 
     try:
         # Execute the input code
-        print(f"\n{log}OUTPUT{colors.NC}:")
+        log(f"\n{colors.BMAGENTA}Sending to interpreter... {colors.BGREEN}RUN{colors.NC}!")
         exec(input_code)
     except Exception as e:
-        print(f"\n{log}{colors.BRED}Error{colors.NC}:{colors.RED} {e}{colors.NC}")
+        print(f"\n{colors.BRED}Error{colors.NC}:{colors.RED} {e}{colors.NC}")
 
     # Reset stdout and stderr
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
 
     # Print the output of the executed code
+    log(f"\n{colors.BMAGENTA}OUTPUT{colors.NC}:")
     print(output.getvalue())
 
 if __name__ == "__main__":

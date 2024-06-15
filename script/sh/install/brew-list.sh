@@ -6,7 +6,7 @@ eval "$(dcd colors get)"
 eval "$(dcd colors log)"
 exec 2>/dev/null
 
-[[ "$(uname)" == "Darwin" ]] || exit -1;
+[[ "$(uname)" == "Darwin" ]] || exit -1;  # make sure this is macOS
 
 ##### LIST #####
 formulae="
@@ -37,6 +37,8 @@ casks="
 --cask gimp
 --cask xquartz
 --cask microsoft-remote-desktop
+--cask midnight-commander
+--cask vscodium
 "
 ##############
 
