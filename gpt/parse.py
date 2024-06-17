@@ -11,7 +11,7 @@ from datetime import datetime
 --------------------
 ## Default Values ##
 --------------------
-defaults write net.dc87.gpt jsonpath '/opt/gptdb/json/conversations.json'
+defaults write /opt/net.dc87.gpt jsonpath '/opt/gptdb/json/conversations.json'
 defaults write net.dc87.gpt dbpath   '/opt/gptdb/gpt.db'
 
 defaults read net.dc87.gpt jsonpath
@@ -22,7 +22,7 @@ cp conversations.json "$(dirname "$(defaults read net.dc87.gpt jsonpath)")"
 
 def getDefaultPath(defaultKey):
     try:
-        result = subprocess.run(['defaults', 'read', 'net.dc87.gpt', defaultKey], capture_output=True, text=True)
+        result = subprocess.run(['defaults', 'read', '/opt/script/config.plist', defaultKey], capture_output=True, text=True)
         return result.stdout.strip()
     except Exception as e:
         print(f"Error reading default path for {defaultKey}: {e}")

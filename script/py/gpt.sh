@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
-source "$(defaults read net.dc87.dcd installTo)/etc/colors.sh"
+source "$(defaults read /opt/script/config.plist installTo)/etc/colors.sh"
 
-gptDir="$(defaults read net.dc87.dcd installTo)/gpt"
+gptDir="$(defaults read /opt/script/config.plist installTo)/gpt"
 
 # Make sure there was a OpenAI scriptlet specificed
 [[ -z "$1" ]] && exit -100

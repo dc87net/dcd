@@ -39,6 +39,7 @@ casks="
 --cask microsoft-remote-desktop
 --cask midnight-commander
 --cask vscodium
+--cask db-browser-for-sqlite
 "
 ##############
 

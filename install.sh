@@ -33,7 +33,7 @@ fi
 
 #- SECTION 1: PREPARE & INSTALL
 # Print welcome message
-echo -ne "${YELLOW}══════ ***-> Hang On...! <-*** ══════${NC}"
+echo -ne "${YELLOW}════════════ ***-> Hang On...! <-*** ════════════${NC}"
 sudo rm -rf "$basePath"
 # Copy to the install path
 ## Get the true path of this install script:
