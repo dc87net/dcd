@@ -13,6 +13,7 @@ installUser="$(ps -p $PPID | awk '{$NF}')"
 # Create the local copy of the git source
 sudo mkdir -p "$gitDir"
 sudo chown "$installUser" "$gitDir"
+sudo chmod 777 "$gitDir"
 
 # Create the installation directory
 sudo mkdir -p "$installDir"
