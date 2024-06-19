@@ -2,3 +2,5 @@ alias cdrp='eval cd \"$(realpath .)\"'
 YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=
 
 https://dash.cloudflare.com/profile/api-tokens
+
+# https://dc87net.nyc3.digitaloceanspaces.com/pub/tld/Cloudflare_WARP_2024.5.287.1.pkg

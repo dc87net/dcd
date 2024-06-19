@@ -25,6 +25,7 @@ updateFile(){
   echo "$appendLine" >> "$outFile"
 }
 
+#- Must run as root for installation
 if [[ "$(whoami)" != 'root' ]]; then
   echo -e "${BMAGENTA}==>${NC} Installation requires ${BRED}root${NC}\n\tUse: ${BCYAN}sudo bash install.sh${NC}"
   exit 100
@@ -33,7 +34,7 @@ fi
 
 #- SECTION 1: PREPARE & INSTALL
 # Print welcome message
-echo -ne "${YELLOW}════════════ ***-> Hang On...! <-*** ════════════${NC}"
+echo -ne "${YELLOW}══════════ ***-> Hang On...! <-*** ═════════${NC}"
 sudo rm -rf "$basePath"
 # Copy to the install path
 ## Get the true path of this install script:
@@ -46,7 +47,7 @@ thisPath=$output
 echo -ne "\r                                             \r";
 log "SELF:\t ${CYAN}$thisPath${NC}"		      ## THIS SCRIPT  (with name)
 sleep 0.4
-export thisPath="$(dirname $(realpath $thisPath))"    ## THISPATH     (this scrip's path)
+export thisPath="$(dirname $(realpath $thisPath 2>/dev/null))"    ## THISPATH     (this scrip's path)
 sleep 0.4
 log "thisPath/real:  ${RED}$thisPath${NC}"; cd "$thisPath" || exit -1
 log "basePath:     ${BCYAN}$basePath${NC}"
@@ -83,7 +84,7 @@ for dir in "${dirs[@]}"; do      # 🔴 Enumerate the folders of script containe
     echo -ne " ${BYELLOW}└──╼${NC}  linking: ${CYAN}$file${NC} as ${BCYAN}$linkName${NC}"
     echo -ne "\t(${BLUE}$binPath/$linkName${NC})"
     echo ""
-    ln -s "$subdir/$file" "$binPath/$linkName" || { echo "Failed to link $file"; continue; }
+    ln -s "$subdir/$file" "$binPath/$linkName" || { echo "${RED}ERROR${NC}: ${BRED}Failed to link ${BYELLOW}$file${NC}"; continue; }
   done
   popd > /dev/null
 done

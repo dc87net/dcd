@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
+## Installs homebrew if it is not installed; otherwise, exits 100
 
 eval "$(dcd colors get)"
 eval "$(dcd colors log)"
 
-[[ $(brew --prefix 2>/dev/null) ]] && { log "${RED}Error${NC}: ${BCYAN}brew ${BYELLOW}is already installed.${NC}"; exit 1; }
+[[ $(brew --prefix 2>/dev/null) ]] && { log "${YELLOW}Warning${NC}: ${BCYAN}brew ${BBLACK}is already installed;" \
+ "disregard this notice if expected.${NC}"; exit 100; }
 
 # Homebrew-specified install command (https://brew.sh/)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

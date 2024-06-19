@@ -14,12 +14,15 @@ CMD="$1"; shift
 ARGS="$*"
 #log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
 
-# Check for 'special' verbs
+# Check for 'special' verbs        ✅       ✅       ✅
 if [[ "$CMD" == "install" ]]; then     # SPECIAL: `install`
-  log "${BMAGENTA}Special: ${CYAN}install: ${BCYAN}$ARGS{NC}"
   installScript="$installTo/script/sh/install"
+  log "${BMAGENTA}Special: ${CYAN}install:  <${BCYAN}$ARGS${NC}>"
+  log "Install script root:  @<$installScript>"
 
-  [[ "$ARGS" == "common" ]] && { bash "$installScript/brew-list.sh"; log "${BMAGENTA}Special Install: ${BGREEN}Complete${NC}"; }
+
+  [[ "$ARGS" == "common" ]] && { { bash "$installScript/brew-list.sh" && log "${BMAGENTA}Special Install: Reports ${GREEN}Complete${NC}"; } \
+    || { log "${BMAGENTA}Special Install: Reports ${RED}Complete${NC}"; } }
   [[ "$ARGS" == "kleopatra" ]] && { bash "$installScript/kleopatra.sh"; log "${BMAGENTA}Special Install: ${BGREEN}Caveats pre-satisfied${NC}"; }
   exit 0
 elif [[ "$CMD" == "help" ]]; then

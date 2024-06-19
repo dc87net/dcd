@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
+##TODO>###### TERMINAL COLORS AND LOGGING ######<ODOT##
 ## Copyright 2024 - DC87 Solutions LLC. All rights reserved.
+
 #### *** IMPORTANT *** #####
 ## Include this **ONLY** using `source`, for ASCII color table!
 ##
@@ -17,28 +19,29 @@ export LINECOLOR='BYELLOW' # Color of `log` indicator
 
 ## Color constant table
 readonly colorString=$(cat <<< "
-## ╔═══════════════════════╗
-## ║ ## COLOR CONSTANTS ## ║
-## ╚═══════════════════════╝
-export BLACK='\033[0;30m'   # BLACK
-export BLUE='\033[0;34m'    # BLUE
-export CYAN='\033[0;36m'    # CYAN
-export GREEN='\033[0;32m'   # GREEN
-export MAGENTA='\033[0;35m' # MAGENTA
-export RED='\033[0;31m'     # RED
-export WHITE='\033[0;37m'   # WHITE
-export YELLOW='\033[0;33m'  # YELLOW
+##	╔═══════════════════════╗
+##	║ ## COLOR CONSTANTS ## ║
+##	╚═══════════════════════╝
+#
+export	BLACK='\033[0;30m'	# BLACK
+export	BLUE='\033[0;34m'	# BLUE
+export	CYAN='\033[0;36m'	# CYAN
+export	GREEN='\033[0;32m'	# GREEN
+export	MAGENTA='\033[0;35m'	# MAGENTA
+export	RED='\033[0;31m'	# RED
+export	WHITE='\033[0;37m'	# WHITE
+export	YELLOW='\033[0;33m'	# YELLOW
+## 	┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
+export	BBLACK='\033[0;90m'	# Bright Black (Gray)
+export	BBLUE='\033[0;94m'	# Bright Blue
+export	BCYAN='\033[0;96m'	# Bright Cyan
+export	BGREEN='\033[0;92m'	# Bright Green
+export	BMAGENTA='\033[0;95m'	# Bright Magenta
+export	BRED='\033[0;91m'	# Bright Red
+export	BWHITE='\033[0;97m'	# Bright White
+export	BYELLOW='\033[0;93m'	# Bright Yellow
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
-export BBLACK='\033[0;90m'   # Bright Black (Gray)
-export BBLUE='\033[0;94m'    # Bright Blue
-export BCYAN='\033[0;96m'    # Bright Cyan
-export BGREEN='\033[0;92m'   # Bright Green
-export BMAGENTA='\033[0;95m' # Bright Magenta
-export BRED='\033[0;91m'     # Bright Red
-export BWHITE='\033[0;97m'   # Bright White
-export BYELLOW='\033[0;93m'  # Bright Yellow
-## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
-export NC='\033[0m'
+export NC='\033[0m'	# No Color/No Formatting
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 ")
 
@@ -68,17 +71,19 @@ log(){
 }
 
 
+##TODO>###### PARAM HANDLER ######<ODOT##
 #if [[ $1 ]];then log "params $*"; fi
 params="$*"
 #echo -e "\tPARAMS: $*"
-if [[ $params == "get" ]]; then { _COLORS2ENV; } fi # cat <<< "$(dcd colors log)"; } fi
+[[ $params == "colors" ]] && { cat <<< "$colorString"; }  # cat <<< "$(dcd colors log)"; } fi
+[[ $params == "get" ]]    && { _COLORS2ENV; }
 if [[ $params == "colors" ]]; then
   _COLORS2ENV
   log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
   _SHELL #(exec eval "zsh <<< env")
 fi
 if [[ $params == "test" ]]; then
-  echo "$(dcd colors get)"
+  echo "$(dcd colors get | column -t -s"\t")"
 fi
 if [[ $params == "log" ]]; then
   (exec eval base64 -d -i - <<< 'IyEvdXNyL2Jpbi9lbnYgYmFzaAoKcmVzMT0iJChkY2QgY29sb3JzIGdldCkiCiNldmFsICIkKGRjZCBjb2xvcnMgZ2V0KSIKZXZhbCAiJHJlczEiCgpMSU5FQ09MT1I9J1lFTExPVycJIyBjb2xvciBuYW1lIGFzIHRleHQgKG5vdCBhcyBjb2xvciB2YXJpYWJsZSkKCgpsb2coKXsKICBldmFsICJlY2hvIC1lIFwiXCR7JExJTkVDT0xPUn09PT4gICR7TkN9JCpcIiIKfQo=')

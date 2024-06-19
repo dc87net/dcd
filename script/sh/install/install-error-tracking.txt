@@ -1,0 +1,61 @@
+╭─    ~ ▓▒░·······································░▒▓ ✔  at 02:07:32  ─╮
+╰─ dcd install common                                                        ─╯
+==>  Special: install:  <common{}>       ✅?
+==>  Install script root:  @</opt/script/script/sh/install>
+==>  Preflight check ...
+==>  Checking for brew ...
+==>  Homebrew found!
+==>  Upgrade brew; upgrade existing formulae and casks
+==> Updating Homebrew...
+Updated 1 tap (homebrew/services).
+No changes to formulae or casks.
+==>  cleanup ...
+
+Please note that these warnings are just used to help the Homebrew maintainers
+with debugging if you file an issue. If everything you use Homebrew for is
+working fine: please don't worry or file an issue; just ignore this. Thanks!
+
+Warning: Some installed formulae are deprecated or disabled.
+You should find replacements for the following formulae:
+  neofetch
+==>  doctor ...
+
+==>  OK}!       ✅
+==>  Installing: Common programs using brew
+Warning: No available formula with the name "python-pyodb". Did you mean python-pytz?
+==> Searching for similarly named formulae and casks...
+==> Formulae
+python-pytz
+
+To install python-pytz, run:
+  brew install python-pytz
+Warning: Cask '#--cask' is unavailable: No Cask with this name exists.
+==> Searching for similarly named casks...
+==> Casks
+font-caskaydia-cove-nerd-font            font-caskaydia-mono-nerd-font
+
+To install font-caskaydia-cove-nerd-font, run:
+  brew install --cask font-caskaydia-cove-nerd-font
+Collecting obd
+  Downloading obd-0.7.2.tar.gz (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 963.2 kB/s eta 0:00:00
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Installing backend dependencies ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting pyserial==3.* (from obd)
+  Downloading pyserial-3.5-py2.py3-none-any.whl.metadata (1.6 kB)
+Collecting pint==0.20.* (from obd)
+  Downloading Pint-0.20.1-py3-none-any.whl.metadata (7.5 kB)
+Downloading Pint-0.20.1-py3-none-any.whl (269 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 269.5/269.5 kB 3.0 MB/s eta 0:00:00
+Downloading pyserial-3.5-py2.py3-none-any.whl (90 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 3.0 MB/s eta 0:00:00
+Building wheels for collected packages: obd
+  Building wheel for obd (pyproject.toml) ... done
+  Created wheel for obd: filename=obd-0.7.2-py3-none-any.whl size=72225 sha256=dc8080a7a7bac48c6a42312d3f353d26dff589a8d9e12eb06ce7fb8a4f156d49
+  Stored in directory: /Users/douglas/Library/Caches/pip/wheels/79/ea/cf/8457b04b04a1599e3030326ca99f9c2daf2561619030c9eb18
+Successfully built obd
+Installing collected packages: pyserial, pint, obd
+Successfully installed obd-0.7.2 pint-0.20.1 pyserial-3.5
+==>  Special Install: Reports Complete
