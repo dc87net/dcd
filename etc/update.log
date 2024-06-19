@@ -1,0 +1,9 @@
+#date +"%Y-%m-%d"
+
+2024-06-19
+-- added interactive shell depth estimator, `deep`                                                                     ─╯
+-- polished some output formatting
+-- added wget, python packages
+-- updated readme to cover web-based installation
+-- added obd-II py script
+-- fixed bug in `compname`"
