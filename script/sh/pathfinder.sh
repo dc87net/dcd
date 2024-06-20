@@ -12,8 +12,8 @@ getScriptPath(){
   exit 0
 }
 
-[ -$# -gt 0 ] && {
-
+[[ -$# -gt 0 ]] && {
+  :
 } || {
   getScriptP
 }

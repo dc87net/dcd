@@ -18,7 +18,7 @@ cat <<< "/sbin/mount -u /
 /sbin/zfs mount pfSense/ROOT/default/var_db_pkg
 /sbin/nextboot -D
 /etc/rc.initial.password
-y"
+y";
 echo;
 
 cat <<< "then, at \`marvell>>\`
