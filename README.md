@@ -10,7 +10,7 @@ the current scope.
 ## -- Installation
 ### --- ***Method 1*** (easy)
 ```zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/dc87net/dcd/main/webinstall.sh)"
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/dc87net/dcd/main/webinstall.sh)"
 ```
 #### --- Method 2
 Alternatively, download the files manually; then, simply place the parent directory (`script`) in `/Users/Shared`; Lastly:
