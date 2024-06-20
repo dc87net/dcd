@@ -1,6 +1,25 @@
 alias cdrp='eval cd \"$(realpath .)\"'
 YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=
 
-https://dash.cloudflare.com/profile/api-tokens
 
-# https://dc87net.nyc3.digitaloceanspaces.com/pub/tld/Cloudflare_WARP_2024.5.287.1.pkg
+# https://dash.cloudflare.com/profile/api-tokens
+# 🚨 https://dc87net.nyc3.digitaloceanspaces.com/pub/tld/Cloudflare_WARP_2024.5.287.1.pkg
+
+
+
+#-###################################################
+cat << eof
+      .,cdxxxoc,.               .:kKMMMNWMMMNk:.
+    cKMMN0OOOKWMMXo. ;        ;0MWk:.      .:OMMk.
+  ;WMK;.       .lKMMNM,     :NMK,             .OMW;
+ cMW;            'WMMMN   ,XMK,                 oMM'
+.MMc               ..;l. xMN:                    KM0
+'MM.                   'NMO                      oMM
+.MM,                 .kMMl                       xMN
+ KM0               .kMM0. .dl:,..               .WMd
+ .XM0.           ,OMMK,    OMMMK.              .XMK
+   oWMO:.    .;xNMMk,       NNNMKl.          .xWMx
+     :ONMMNXMMMKx;          .  ,xNMWKkxllox0NMWk,
+         .....                    .:dOOXXKOxl,
+ eof
+ #-###################################################

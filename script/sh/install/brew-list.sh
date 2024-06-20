@@ -27,6 +27,10 @@ pyinstaller
 dnscrypt-proxy
 mc
 tcl-tk
+pandoc
+man2html
+groff
+ghostscript
 "
 
 casks="
@@ -59,8 +63,8 @@ checkBrew(){
 
   log "Upgrade brew; upgrade existing formulae and casks"
   brew update && brew upgrade && brew upgrade --cask || return 1;
-  log "cleanup ... \n$(brew cleanup;)"
-  log "doctor ...  \n$(brew doctor;)"
+  log "cleanup ... "; brew cleanup;
+  log "doctor ... ";  brew doctor;
 
   return 0;
 
