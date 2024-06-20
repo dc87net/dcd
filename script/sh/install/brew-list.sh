@@ -31,6 +31,7 @@ pandoc
 man2html
 groff
 ghostscript
+aha
 "
 
 casks="
