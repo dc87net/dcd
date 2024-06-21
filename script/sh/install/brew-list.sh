@@ -32,6 +32,7 @@ man2html
 groff
 ghostscript
 aha
+enscript
 "
 
 casks="
