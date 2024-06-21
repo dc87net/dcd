@@ -63,8 +63,13 @@ checkBrew(){
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
   } || { log "${MAGENTA}Homebrew ${BGREEN}found${NC}!"; }
 
-  log "Upgrade brew; upgrade existing formulae and casks"
-  brew update && brew upgrade && brew upgrade --cask || return 1;
+  log "UPDATE WITH HOMEBREW:"
+  log "\tUpdating ${BCYAN}brew${NC} ..."
+  brew update || exit -100
+  log "\Updating ${MAGENTA}formulae${NC} ..."
+  brew upgrade || exit -101
+  log "\tUpdating ${MAGENTA}casks${NC}"
+  brew upgrade --cask || exit -102;
   log "cleanup ... "; brew cleanup;
   log "doctor ... ";  brew doctor;
 
