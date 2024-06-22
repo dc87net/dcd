@@ -22,7 +22,7 @@ if [[ "$CMD" == "install" ]]; then     # SPECIAL: `install`
 
 
   [[ "$ARGS" == "common" ]] && { { bash "$installScript/brew-list.sh" && log "${BMAGENTA}Special Install: Reports ${GREEN}Complete${NC}"; } \
-    || { log "${BMAGENTA}Special Install: Reports ${RED}Complete${NC}"; } }
+    || { log "${BMAGENTA}Special Install: Reports ${YELLOW}Finished${NC} **does not indicate success or failure!**"; } }
   [[ "$ARGS" == "kleopatra" ]] && { bash "$installScript/kleopatra.sh"; log "${BMAGENTA}Special Install: ${BGREEN}Caveats pre-satisfied${NC}"; }
   exit 0
 elif [[ "$CMD" == "help" ]]; then

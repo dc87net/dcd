@@ -6,9 +6,7 @@ eval "$(dcd colors get)"
 
 #- Ensure auxilary tool `pstree` is present
 CMD="pstree"
-[[ $(which "$CMD") ]]
-res1="code: $?"
-echo -e "[DEBUG] exit code: $res1"
+echo $(command -v "$CMD")
 command -v "$CMD" >/dev/null 2>&1 && {
   :
   } || {

@@ -34,6 +34,8 @@ groff
 ghostscript
 aha
 enscript
+pstree
+blueutil
 "
 
 casks="
@@ -48,7 +50,15 @@ casks="
 --cask wireshark
 --cask microsoft-remote-desktop
 --cask vscodium
---cask db-browser-for-sqlite
+--cask db-browser-for-sqliteca
+--cask xquartz
+--cask gimp
+"
+
+pipList="
+binwalk
+obd
+openai
 "
 #--cask xquartz
 #--cask gimp
@@ -86,9 +96,14 @@ main(){
   log "Preflight check ..."
   checkBrew && log "${BGREEN}OK${NC}!" || exit 1;
 
-  log "${BMAGENTA}Installing${NC}: Common programs using ${GREEN}brew${NC}";
-  xargs -I{} sh -c 'brew install --force --overwrite {}' <<< $formulae;
+  log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}brew${NC}";
+  log "\tInstalling ${MAGENTA}formulae${NC} ..."
+  xargs brew install --force <<< $formulae;
+  log "\tInstalling ${MAGENTA}casks${NC} ..."
   xargs -I{} sh -c 'brew install --cask --force {}' <<< "$casks"
+  log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}pip3${NC}";
+  xargs pip3 install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org \
+    --trusted-host files.pythonhosted.org <<< "$pipList"
 
   exit 0
   #sudo pip3 install obd --break-system-packages # for Python OBD-II support
