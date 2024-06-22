@@ -1,6 +1,7 @@
 alias cdrp='eval cd \"$(realpath .)\"'
 YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic=
 
+CMD='bash'; ("$("which "$CMD")" 2&>1 /dev/null && cat - >/dev/stderr || { log "${BRED}Error${NC}: ${RED}Not found: ${YELLOW}$CMD${NC}"; }
 
 # https://dash.cloudflare.com/profile/api-tokens
 # 🚨 https://dc87net.nyc3.digitaloceanspaces.com/pub/tld/Cloudflare_WARP_2024.5.287.1.pkg

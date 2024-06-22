@@ -10,6 +10,7 @@ eval "$(dcd colors log)"
 
 ##### LIST #####
 formulae="
+parallel
 wget
 htop
 iftop
@@ -66,12 +67,15 @@ checkBrew(){
   log "UPDATE WITH HOMEBREW:"
   log "\tUpdating ${BCYAN}brew${NC} ..."
   brew update || exit -100
-  log "\Updating ${MAGENTA}formulae${NC} ..."
+  log "\tUpdating ${MAGENTA}formulae${NC} ..."
   brew upgrade || exit -101
-  log "\tUpdating ${MAGENTA}casks${NC}"
+  log "\tUpdating ${MAGENTA}casks${NC} ..."
   brew upgrade --cask || exit -102;
+  sleep 0.5
   log "cleanup ... "; brew cleanup;
+  sleep 0.5
   log "doctor ... ";  brew doctor;
+  sleep 0.5
 
   return 0;
 
@@ -83,9 +87,11 @@ main(){
   checkBrew && log "${BGREEN}OK${NC}!" || exit 1;
 
   log "${BMAGENTA}Installing${NC}: Common programs using ${GREEN}brew${NC}";
-  xargs brew install <<< $formulae;
-  xargs brew install --cask <<< $casks;
-  sudo pip3 install obd --break-system-packages # for Python OBD-II support
+  xargs -I{} sh -c 'brew install --force --overwrite {}' <<< $formulae;
+  xargs -I{} sh -c 'brew install --cask --force {}' <<< "$casks"
+
+  exit 0
+  #sudo pip3 install obd --break-system-packages # for Python OBD-II support
 
 
   ##TODO: for each: xattr -c <InstalledApplication.app>
