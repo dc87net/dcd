@@ -76,10 +76,12 @@ log(){
 params="$*"
 #echo -e "\tPARAMS: $*"
 [[ $params == "colors" ]] && { cat <<< "$colorString"; }  # cat <<< "$(dcd colors log)"; } fi
-[[ $params == "get" ]]    && { _COLORS2ENV; }
+[[ $params == "get" ]]    && { _COLORS2ENV; echo "export LINECOLOR='BYELLOW'"; }
 if [[ $params == "colors" ]]; then
   _COLORS2ENV
-  log "Color Table:  ✅ Loaded into ${BCYAN}current${NC} shell environment"
+  log "Color Table:  ✅ Color check for subshell: ${BCYAN}${$}{NC} @ current depth info: "
+  dcd deep
+  log "spawning a shell to make colors available in the working env; use ${MAGENTA}exit${NC} to exit the new subshell)"
   _SHELL #(exec eval "zsh <<< env")
 fi
 if [[ $params == "test" ]]; then

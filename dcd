@@ -7,7 +7,7 @@ installTo="$(defaults read /opt/script/config.plist installTo)"
 source "$installTo/etc/colors.sh"
 
 # Make sure scriptlet is specificed
-[[ -z "$1" ]] && { log "${BRED}Error${NC}: ${RED}No scriptlet specified${NC}"; exit -100; }
+[[ -z "$1" ]] && { log "${BRED}Error${NC}: ${RED}No target specified${NC}"; exit -100; }
 
 # Parse args
 CMD="$1"; shift
