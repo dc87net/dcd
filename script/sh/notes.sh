@@ -14,7 +14,7 @@ echo -en "${GREEN}Save file @  >>> "
 read res1; eval "res1=$res1"
 [[ "$res1" ]] && {
   cp "$tfile" "$res1" || log "Unable to save at $res1"
-  log "${BGREEN}Saved${NC} as ${BCYAN}$res1${NC}";
+  log "${BGREEN}Saved${NC} as ${CYAN}$res1${NC}";
 } || {
   log "Discarding contents ..."
 };
