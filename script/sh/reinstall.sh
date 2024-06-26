@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-
+## Rel.: /script/sh/reinstall.sh
 eval "$(dcd colors get)"
 log "${MAGENTA}$(date)${NC}"
 #source "$installTo/bin/colors"

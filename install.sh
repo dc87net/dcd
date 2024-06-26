@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+## Rel.:  /install.sh
 ## Copyright 2024 - Douglas C <dc87(dot)net(slash)dcd>; licenses are granted under GNU GPLv3. See `LICENSE` file.
 ## Installs `dcd` to $basePath; symlinks files in ./script marked u+x to $scriptsContainer
 
