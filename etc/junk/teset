@@ -1,0 +1,32 @@
+#!/bin/bash
+
+(
+str="two words\n line 2"
+echo -e $str | awk '{print $0}'
+echo
+echo '-'
+echo
+echo -e $str | awk '{print $NF}'
+echo '-'
+echo
+echo -e $str | awk '{print $NR}'
+)
+
+#(
+#echo
+#echo '-'
+#echo
+#echo "two words\
+#line 2" | xargs
+#)
+
+
+(
+echosh(){
+	echo "$@"
+}
+
+str="two words\n line 2"
+echo -e "$str" | xargs | echosh
+
+)

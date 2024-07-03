@@ -9,58 +9,65 @@ eval "$(dcd colors log)"
 [[ "$(uname)" == "Darwin" ]] || exit -1;  # make sure this is macOS
 
 ##### LIST #####
+ ## FORMULAE ## alphabetically ordered ##
 formulae="
-parallel
-wget
+1password-cli@beta
+aha
+blueutil
+brave-browser
+dnscrypt-proxy
+enscript
+ghostscript
+groff
 htop
 iftop
-tree
-1password-cli@beta
-neofetch
-screen
-parallel
-brave-browser
-watch
-python@3.12
-python-argcomplete
-xclip
-pyinstaller
-dnscrypt-proxy
-mc
-tcl-tk
-pandoc
+iterm2e
 man2html
-groff
-ghostscript
-aha
-enscript
+mc
+neofetch
+pandoc
+parallel
+parallel
 pstree
-blueutil
+pyinstaller
+python-argcomplete
+python@3.12
+screen
+tcl-tk
+tree
+watch
+wget
+xclip
+xquartz
 "
 
+ ## CASKS ## alphabetically ordered ##
 casks="
---cask commander-one
---cask sublime-text
---cask github
 --cask 1password@nightly
---cask pycharm-ce
---cask firefox
+--cask chatgpt
 --cask chromium
---cask google-chrome
---cask wireshark
---cask microsoft-remote-desktop
---cask vscodium
---cask db-browser-for-sqliteca
---cask xquartz
+--cask commander-one
+--cask db-browser-for-sqlite
+--cask firefox
+--cask fleet
 --cask gimp
+--cask github
+--cask google-chrome
+--cask microsoft-remote-desktop
+--cask phpstorm
+--cask pycharm-ce
+--cask sublime-text
+--cask wireshark
+--cask xquartz
 "
+# --cask vscodium
 
+## PYTHON PACKAGES ## alphabetically ordered ##
 pipList="
 binwalk
 obd
 openai
 "
-#--cask xquartz
 #--cask gimp
 
 #python3-argcomplete xclip
@@ -81,11 +88,11 @@ checkBrew(){
   brew upgrade || exit -101
   log "\tUpdating ${MAGENTA}casks${NC} ..."
   brew upgrade --cask || exit -102;
-  sleep 0.5
+  sleep 1
   log "cleanup ... "; brew cleanup;
-  sleep 0.5
+  sleep 1
   log "doctor ... ";  brew doctor;
-  sleep 0.5
+  sleep 1
 
   return 0;
 
@@ -96,14 +103,22 @@ main(){
   log "Preflight check ..."
   checkBrew && log "${BGREEN}OK${NC}!" || exit 1;
 
-  log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}brew${NC}";
-  log "\tInstalling ${MAGENTA}formulae${NC} ..."
-  xargs brew install --force <<< $formulae;
-  log "\tInstalling ${MAGENTA}casks${NC} ..."
-  xargs -I{} sh -c 'brew install --cask --force {}' <<< "$casks"
-  log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}pip3${NC}";
-  xargs pip3 install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org \
-    --trusted-host files.pythonhosted.org <<< "$pipList"
+  {
+    log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}brew${NC}";
+      # Formulae
+    log "\tInstalling ${MAGENTA}formulae${NC} ...";
+    xargs brew install --force <<< $formulae;
+      # Casks
+    log "\tInstalling ${MAGENTA}casks${NC} ...";
+    xargs -I{} sh -c 'brew install --cask --force {}' <<< "$casks";
+      # Common
+    log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}pip3${NC}";
+    xargs pip3 install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org \
+      --trusted-host files.pythonhosted.org <<< "$pipList";
+      # Kleopatra (Certificate/PGP Mgmt (by KDE)
+    log "${BMAGENTA}Installing${NC}: Kleopatra using ${CYAN}dcd install kleopatra${NC}";
+    dcd install kleopatra;
+  }
 
   exit 0
   #sudo pip3 install obd --break-system-packages # for Python OBD-II support

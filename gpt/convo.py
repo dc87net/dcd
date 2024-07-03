@@ -12,7 +12,7 @@ from script.py import colors
 
 def getDefaultPath(defaultKey):
     try:
-        result = subprocess.run(['defaults', 'read', 'net.dc87.gpt', defaultKey], capture_output=True, text=True)
+        result = subprocess.run(['defaults', 'read', '/opt/gpt/net.dc87.gpt', defaultKey], capture_output=True, text=True)
         return result.stdout.strip()
     except Exception as e:
         print(f"Error reading default path for {defaultKey}: {e}")

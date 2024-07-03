@@ -11,14 +11,28 @@ from datetime import datetime
 --------------------
 ## Default Values ##
 --------------------
-defaults write /opt/net.dc87.gpt jsonpath '/opt/gptdb/json/conversations.json'
-defaults write net.dc87.gpt dbpath   '/opt/gptdb/gpt.db'
+# important values
+def1='/opt/gptdb/net.dc87.gpt'
+dir1='/opt/gptdb/json/'
 
+# create paths PRN
+mkdir -p "$dir1"
+
+# establish defaults
+defaults write "$de1f" jsonpath "${dir1}/conversations.json"
+defaults write net.dc87.gpt dbpath   "/opt/gptdb/gpt_$(date \"+%s\")$}.db"
+
+# test defaults
 defaults read net.dc87.gpt jsonpath
 defaults read net.dc87.gpt dbpath
 
-cp conversations.json "$(dirname "$(defaults read net.dc87.gpt jsonpath)")"
+# ??
+#cp conversations.json "$(dirname "$(defaults read net.dc87.gpt jsonpath)")"
+
+
+
 """
+
 
 def getDefaultPath(defaultKey):
     try:

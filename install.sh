@@ -155,8 +155,14 @@ log "${BMAGENTA}TREE${NC}:"
 tree "$basePath"
 echo;
 
+
 # Switch to the specified user and start a new login shell, replacing the current shell
-exec su - $user -c "exec zsh"
+echo -ne "Enter a new shell?[Y/n] "
+read res1
+[[ "${res1,,}" =~ ^y(es)?$ ]] &&{
+  log "Starting subshell ... ";
+  exec su - "$user" -c "exec zsh";
+}
 
 
 ##TODO: Implement Support: Log to file.
@@ -167,3 +173,5 @@ exec su - $user -c "exec zsh"
 #rm -f "$logFile"
 
 
+
+}
