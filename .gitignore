@@ -1,15 +1,14 @@
+## macOS files
 **/.DS_Store
+**/.*
+
+## PyCharm Files
+*.out
 *.toc
 /.idea/
+
+## Project-specific Files
 /bin/*
-**/.*
 /priv/*
 
-*.out
-script/sh/gptPathScript.sh
 
-
-scratch/em4100.py
-script/py/em4100.py
-scratch/cfhosts
-scratch/cfhosts
