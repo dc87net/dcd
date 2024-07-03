@@ -59,6 +59,7 @@ casks="
 --cask sublime-text
 --cask vscodium
 --cask wireshark
+--cask ykman
 --cask xquartz
 "
 
@@ -68,9 +69,7 @@ binwalk
 obd
 openai
 "
-#--cask gimp
 
-#python3-argcomplete xclip
 ##############
 
 checkBrew(){

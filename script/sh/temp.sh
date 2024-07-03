@@ -1,5 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env  zsh
 
+export args="\'${*}\'"  # to pass to subshell
+
+(
 dirLocation=$(mktemp -d)
 pushd "$dirLocation"
 chmod 700 "$dirLocation"
@@ -10,5 +13,6 @@ zsh
 cd ~
 read -p "Press Enter/return to clean up.  Save anything you want to keep now. (Ctrl+d to pause)"
 rm -rf "$dirLocation"
+)
 
-echo "Cleaned up!"
+log "Cleaned up!"

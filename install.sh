@@ -99,7 +99,9 @@ echo -e "${BYELLOW}==> ${MAGENTA}USER:  ${BMAGENTA}$user${NC}"
 export outFile="/Users/$user/.zshrc"
 
 # Update current .zshrc (while preventing duplicate entries)
-updateFile 'UEFUSD0vb3B0L3NjcmlwdDokUEFUSAo='
+# A accurate translation is always directly below each CMD
+updateFile "/opt/script:${PATH}"
+  # PATH=/opt/script:$PATH
 updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
 
 
