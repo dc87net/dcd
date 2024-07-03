@@ -21,7 +21,7 @@ ghostscript
 groff
 htop
 iftop
-iterm2e
+iterm2
 man2html
 mc
 neofetch
@@ -57,10 +57,10 @@ casks="
 --cask phpstorm
 --cask pycharm-ce
 --cask sublime-text
+--cask vscodium
 --cask wireshark
 --cask xquartz
 "
-# --cask vscodium
 
 ## PYTHON PACKAGES ## alphabetically ordered ##
 pipList="
@@ -117,7 +117,8 @@ main(){
       --trusted-host files.pythonhosted.org <<< "$pipList";
       # Kleopatra (Certificate/PGP Mgmt (by KDE)
     log "${BMAGENTA}Installing${NC}: Kleopatra using ${CYAN}dcd install kleopatra${NC}";
-    dcd install kleopatra;
+
+    log "To (re)install ${BCYAN}kleopatra${NC} using:  ${BCYAN}dcd install kleopatra${NC}"  #dcd install kleopatra;
   }
 
   exit 0

@@ -1,12 +1,15 @@
 #!/usr/bin/env zsh
-##TODO>###### TERMINAL COLORS AND LOGGING ######<ODOT##
+##TODO>###################### TERMINAL COLORS AND LOGGING ######################<ODOT##
 ## Copyright 2024 - DC87 Solutions LLC. All rights reserved.
 
 #### *** IMPORTANT *** #####
 ## Include this **ONLY** using `source`, for ASCII color table!
 ##
 ## TO IMPORT THE COLOR TABLE INTO THE ENVIRONMENT:
+##   eval "$(dcd colors get)"
+## -- To spawn an interactive subshell with the colors in the env:
 ##   dcd colors
+## -- To print the raw text used by the `eval` statement (above):
 ##   dcd colors get
 ## Example: echo -e "This is ${RED}red${NC} text!"
 ############################
@@ -14,6 +17,7 @@
 ## Log path should be specified in the parent script that sources this one,
 ## as *--->  $LOGFILE  <---*
 export LOGFILE="$LOGPATH/$LOGFNAME";
+export LOGFILE='/dev/null'
 export LOGENABLE=0
 export LINECOLOR='BYELLOW' # Color of `log` indicator
 
@@ -45,7 +49,21 @@ export NC='\033[0m'	# No Color/No Formatting
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 ")
 
-readonly logString="$(echo 'bG9nKCl7CiAgZXZhbCAiZWNobyAtZSBcIlwkeyRMSU5FQ09MT1J9PT0+ICAke05DfSQqXCIiCn0K' | base64 -d)"
+readonly logString="$(echo \
+'ZGF0ZU4oKXsKICBlY2hvICJbICQoZGF0ZSArIiV5JW0lZC0lSDolTTolUyIpXSAiCn0KbG9nUnVuKCl7CiAgbG9jYWwgY21kCiAgY21kPSQoY2F0KSAgI'\
+'CAjIENhcHR1cmUgdGhlIGNtZAoKICB0b3VjaCAiJExPR0ZJTEUiCiAgZWNobyAtZSAiW0NNRF0kKGRhdGVOKTogICR7Y21kfSIgPj4gIiR7TE9HRklMRX'\
+'0iICAgICAgICAgICAgICAgICAjIExvZyB0aGUgQ01EIGJlaW5nIGV4ZWN1dGVkCiAgZXZhbCAiJGNtZCIgMj4mMSB8IHRlZSAvZGV2L3R0eSAgfCB0ZWU'\
+'gLWEgIiRMT0dGSUxFIj4vZGV2L251bGwgICAjIGNhcHR1cmUsIHN0cmVhbSB0byB0dHksIGFuZCBsb2cgQ01EIHJlc3VsdHMKfQpsb2coKSB7CiAgbG9n'\
+'UnVuIDw8PCAiZWNobyAtZSBcIlwkeyR7TElORUNPTE9SfX09PT4ke05DfSAgJCpcIiIKfQo=' | base64 -d)"
+
+
+
+#'ZGF0ZU4oKXsKICBlY2hvICJbICQoZGF0ZSArIiV5JW0lZC0lSDolTTolUyIpXSAiCn0KbG9nUnVuKCl7CiAgbG9jYWwgY21kCiAgY21kPSQoY2F0KSAgI'\
+#'CAjIENhcHR1cmUgdGhlIGNtZAoKICB0b3VjaCAiJExPR0ZJTEUiCiAgZWNobyAtZSAiW0NNRF0kKGRhdGVOKTogICR7Y21kfSIgPj4gIiR7TE9HRklMRX'\
+#'0iICAgICAgICAgICAgICAgICAjIExvZyB0aGUgQ01EIGJlaW5nIGV4ZWN1dGVkCiAgZXZhbCAiJGNtZCIgMj4mMSB8IHRlZSAvZGV2L3R0eSAgfCB0ZWU'\
+#'gLWEgIiRMT0dGSUxFIj4vZGV2L251bGwgICAjIGNhcHR1cmUsIHN0cmVhbSB0byB0dHksIGFuZCBsb2cgQ01EIHJlc3VsdHMKfQpsb2coKSB7CiAgbG9n'\
+#'UnVuIDw8PCAiZWNobyAtZSBcIlwkeyR7TElORUNPTE9SfX09PT4ke05DfSAgTVNHICQqXCIiCn0K' | base64 -d)"
+
 
 ############################
 ## Function to print the color table, as __executable__ script text
@@ -64,12 +82,20 @@ _SHELL(){
   exec zsh
 }
 
-## Function to log text with a leading marker (color: $LINECOLOR)
-#  cat <<< "$@" | tee -a "$logFile"
-log(){
-  eval "echo -e \"\${$LINECOLOR}==>  ${NC}$*\""
+dateN(){
+  echo "[ $(date +"%y%m%d-%H:%M:%S")] "
 }
+logRun(){
+  local cmd
+  cmd=$(cat)    # Capture the cmd
 
+  touch "$LOGFILE"
+  echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"                 # Log the CMD being executed
+  eval "$cmd" 2>&1 | tee /dev/tty  | tee -a "$LOGFILE">/dev/null   # capture, stream to tty, and log CMD results
+}
+log() {
+  logRun <<< "echo -e \"\${${LINECOLOR}}==>${NC}  $*\""
+}
 
 ##TODO>###### PARAM HANDLER ######<ODOT##
 #if [[ $1 ]];then log "params $*"; fi
@@ -81,7 +107,7 @@ if [[ $params == "colors" ]]; then
   _COLORS2ENV
   log "Color Table:  ✅ Color check for subshell: ${BCYAN}${$}{NC} @ current depth info: "
   dcd deep
-  log "spawning a shell to make colors available in the working env; use ${MAGENTA}exit${NC} to exit the new subshell)"
+  log "Spawning a shell to make colors available in the working env; use ${MAGENTA}exit${NC} to exit the Subshell)"
   _SHELL #(exec eval "zsh <<< env")
 fi
 if [[ $params == "test" ]]; then
@@ -92,22 +118,18 @@ if [[ $params == "log" ]]; then
 fi
 # additional help: `dcd colors help`
 if [[ "$params" == "colors help" ]]; then
-    log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table ${MAGENTA}source${NC}-able code"
+    log "Usage: Use ${BMAGENTA}dcd colors get${NC} for Table; \`${MAGENTA}source${NC}\`-able code"
     exit 0
 fi
 
-
-
-#'--------------------------------------------------------------' 2>&1 /dev/null
-
-
+# echo '------------------------------------------------------------------------------------------------' 2>&1 /dev/null
 
 enableLogging(){
   # Logging, if applicable
   log "Log file located at: ${MAGENTA}$logFile${NC}" || log "ERROR: log file unavailable"
   [ -e "$LOGFILE" ] && {
     echo -e "Logging:  ${GREEN}ENABLED${NC}:\t${MAGENTA}$LOGFILE${NC}";
-    logFile=$("mktemp -p /$(date '+%s').log")
+    logFile=$("mktemp -p /$(dateN).log")
   } || {
     echo -e "Logging:  ${RED}DISABLED${NC}:\t${CYAN}$LOGFILE${NC}";
   }
@@ -120,6 +142,16 @@ demoColoredText(){
     exit 0
   }
 }
+
+
+
+### echo '----------------------------------------------------------------------------------------------' 2>&1 /dev/null
+### echo '----------------------------------------------------------------------------------------------' 2>&1 /dev/null
+### echo '----------------------------------------------------------------------------------------------' 2>&1 /dev/null
+#### WORKS!!
+#
+#╰─ cat /opt/script/dcd | base64                                                                  ─╯
+#IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=
 
 
 # Comment out the below line to completely disable the demo feature
@@ -138,10 +170,3 @@ demoColoredText(){
 #  #eval "$(_COLORS2ENV)"
 #  exec "zsh" -i
 #fi
-
-# -----
-
-#### WORKS!!
-#
-#╰─ cat /opt/script/dcd | base64                                                                  ─╯
-#IyEvdXNyL2Jpbi9lbnYgenNoCgpzb3VyY2UgIi9vcHQvc2NyaXB0L2V0Yy9jb2xvcnMuc2giCmV2YWwgYmFzaCAtYyAiL29wdC9zY3JpcHQvYmluLyRAIgo=

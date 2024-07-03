@@ -159,10 +159,10 @@ echo;
 # Switch to the specified user and start a new login shell, replacing the current shell
 echo -ne "Enter a new shell?[Y/n] "
 read res1
-[[ "${res1,,}" =~ ^y(es)?$ ]] &&{
-  log "Starting subshell ... ";
+#[[ "${res1,,}" =~ ^y(es)?$ ]] &&{
+#  log "Starting subshell ... ";
   exec su - "$user" -c "exec zsh";
-}
+#}
 
 
 ##TODO: Implement Support: Log to file.
