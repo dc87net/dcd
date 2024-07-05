@@ -1,42 +1,104 @@
 #!/usr/bin/env  python3
 
-import os
+# import os
 
 def centerLine(text=' SECTION ', pad='-', lineWidth=80):
-    lText   = len(text)      # The text of the line.
-    lPad    = len(pad)       # Length of the  input text.
-    lTWidth = lineWidth      # Length of entire line
+    lText = len(text)       # Length of the text
+    lTWidth = lineWidth     # Length of the entire line
 
-    ## Calculations
-    res1   = int((lTWidth - lPad - lText+0.5) / 2)
-    mod1   = (lTWidth-lPad-lText) % 2
+    # Calculations
+    lTPadding = lTWidth - lText
+    lLPadding = lTPadding // 2
+    lRPadding = lTPadding - lLPadding
 
-    lRes2a = res1
-    lRes2b = lRes2a + mod1
-    if (mod1 == 1):
-        # print('true')
-        lRes2b = lRes2b + 1 + mod1
-        if (lRes2a < lRes2b):
-            lRes2b+=-1
-    else:
-        # print('false')
-        lRes2b = lRes2a + 1 + mod1
+    # Create the output string
+    outStr = f"{pad * lLPadding}{text}{pad * lRPadding}"
 
-    # print(f"lRes2a<{lRes2a}>  lRes2b<{lRes2b}>")
-    outStr =               \
-    f"{pad}"* int(lRes2a) +\
-    f"{text}"             +\
-    f"{pad}"* int(lRes2b)
-
-    print(f"\nlen: {len(outStr)}")
-
-    print(f"{outStr}")
+    print(f"{outStr}\t{len(outStr)}")
     return 0
+
+def offsetLeftLine(text=' SECTIoON ', pad='-', lineWidth=80, offset=5):
+    lText = len(text)   # Length of the text
+    lTWidth = lineWidth # Length of the entire line
+
+    # Calculations
+    lTPadding = lTWidth - lText
+    lLPadding = -(offset) + (lTPadding // 2)
+    lRPadding = (lTPadding - lLPadding)
+
+    # Create the output string
+    outStr = f"{pad * offset}{text}{pad * (lLPadding - offset)}{pad * (lRPadding)}"
+
+    print(f"{outStr}\t{len(outStr)}")
+    return outStr
+
+
+def offsetRightLine(text=' SECTIoON ', pad='-', lineWidth=80, offset=5):
+    lText = len(text)   # Length of the text
+    lTWidth = lineWidth # Length of the entire line
+
+    # Calculations
+    lTPadding = lTWidth - lText
+    lLPadding = -(offset) + (lTPadding // 2)
+    lRPadding = (lTPadding - lLPadding)
+
+    # Create the output string
+    outStr = f"{pad * (lRPadding)}{pad * (lLPadding - offset)}{text}{pad * offset}"
+
+    print(f"{outStr}\t{len(outStr)}")
+    return outStr
+
+def topBoxLine(text=' BOX ', lineWidth=80, align=1, box=(('╔','║','╙',),
+                                                         ('╗' ,'║','╜'),
+                                                         ('═','─'))
+               , pad=''):
+  # lineWidthNew = lineWidth - Σ{(length of edge characters)[R,L]}; as below,
+    lineWidthNew = lineWidth - (len(box[1][1]) + len(box[2][1]))
+
+    b
+
+    match (align):
+        case 0: pass;   # unassigned
+        case 1:         # align left
+
+
+            textLine = offsetLeftLine(text, pad, lineWidthNew);
+            pass
+        case 2: pass;   # align right
+        case 3:         # align center
+            pass;
+        case 4: pass;   # unassigned
+        # [..]
+    pass
+
+    return 0
+pass
 
 
 def stdLine():
-    pass
+    return
+pass
+
 
 # -- Example Usage --
-centerLine('  🌕🌗🌘🌚🌒🌓🌑 ','#',120)
+print(f"CONTROL:")
 centerLine()
+
+print('')
+offsetLeftLine(' SECTION ', '-', 80)
+offsetLeftLine(' SECTIO ', '-', 80)
+offsetLeftLine(' SECTI ', '-', 80)
+
+print('')
+offsetRightLine(' SECTION ', '-', 80)
+offsetRightLine(' SECTIO ', '-', 80)
+offsetRightLine(' SECTI ', '-', 80)
+
+print('')
+centerLine(' SECTI ', '-', 80)
+centerLine(' SECTIO ', '-', 80)
+centerLine(' SECTION ', '-', 80)
+
+
+
+print('')

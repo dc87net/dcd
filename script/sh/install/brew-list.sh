@@ -61,6 +61,7 @@ casks="
 --cask wireshark
 --cask ykman
 --cask xquartz
+--cask yubico-yubikey-manager
 "
 
 ## PYTHON PACKAGES ## alphabetically ordered ##
