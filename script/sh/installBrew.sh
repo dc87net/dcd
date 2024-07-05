@@ -4,8 +4,8 @@
 eval "$(dcd colors get)"
 eval "$(dcd colors log)"
 
-[[ $(brew --prefix 2>/dev/null) ]] && { log "${YELLOW}Warning${NC}: ${BCYAN}brew ${BBLACK}is already installed;" \
- "disregard this notice if expected.${NC}"; exit 100; }
+[[ $(brew --prefix 2>/dev/null) ]] && { log "${YELLOW}Notice${NC}: ${BCYAN}brew ${BBLACK}is already installed;" \
+ "disregard this notice if expected.${NC}"; } || { log "Updating ${BCYAN}brew${NC}"; }
 
 # Homebrew-specified install command (https://brew.sh/)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -27,7 +27,11 @@ fi
 
 # Install oh-my-zsh and powerlevel10k
 (yes | sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)")
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+[[ -d "~/powerlevel10k/" ]] && {
+  :; # Do no clone repo; exists on disk.
+} || {
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k;
+}
 echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 exec /bin/zsh
