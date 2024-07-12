@@ -3,11 +3,18 @@
 ## Copyright 2024 - Douglas C <dc87(dot)net(slash)dcd>; licenses are granted under GNU GPLv3. See `LICENSE` file.
 ## Installs `dcd` to $basePath; symlinks files in ./script marked u+x to $scriptsContainer
 
+# shellcheck disable=SC2242
+
 # Color constants
 source ./etc/colors.sh
+log "${MAGENTA}$(date)${NC}" || {
+  cat <<< "==>  Error: Unable to find required build file. Are you in the right place?";
+  exit -1;
+}
 
 # Installation constants
 export basePath='/opt/script'
+log "SCRIPT-->  '$(dirname $0)/$(basename $0)"
 export scriptsContainer="$basePath/script"
 export user
 
@@ -17,7 +24,7 @@ log "$(date)"
 ## SECTION 0: HELPER FUNCTIONS
 updateFile(){
   local base64String="$1"
-  local appendLine=$(echo "$base64String" | base64 -d)
+  local appendLine=$(echo "$base64String" | base64 -d) || "$(echo)";
   local output=$(grep -Fv "$appendLine" "$outFile")
 
   echo -e " ${BYELLOW}└──╼${NC}  ${RED}Append: $outFile${NC}:  ${CYAN}$appendLine${NC}"
@@ -50,7 +57,7 @@ log "SELF:\t ${CYAN}$thisPath${NC}"		      ## THIS SCRIPT  (with name)
 sleep 0.4
 export thisPath="$(dirname $(realpath $thisPath 2>/dev/null))"    ## THISPATH     (this scrip's path)
 sleep 0.4
-log "thisPath/real:  ${RED}$thisPath${NC}"; cd "$thisPath" || exit -1
+log "thisPath/real:  ${RED}$thisPath${NC}"; cd "$thisPath" || exit -1;
 log "basePath:     ${BCYAN}$basePath${NC}"
 
 mkdir -p "$basePath"
@@ -102,7 +109,8 @@ export outFile="/Users/$user/.zshrc"
 # A accurate translation is always directly below each CMD
 updateFile "/opt/script:${PATH}"
   # PATH=/opt/script:$PATH
-updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
+#%updateFile 'YWxpYXMgY2RycD0nZXZhbCBjZCBcIiQocmVhbHBhdGggLilcIic='
+eval "(echo 'PATH=/opt/script:$PATH' | tee -a ~/.zshrc && echo '  --> Appended')" || { echo Append Error!; (exit 1); }
 
 
 #- SECTION 3: CLEAN-UP & STAGING
@@ -152,28 +160,29 @@ echo -e "${BYELLOW}  ********\t********\t********\t********${NC}"
 
 # Draw the finalized directory tree of the install destination
 log "${BMAGENTA}TREE${NC}:"
-#tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)
+#tcmd=$(tree "$basePath" | base64 || echo "${YELLOW}tree${NC} not installed..." | base64)s
 #log <<<  "$(echo $tcmd | base64 -d)"
 tree "$basePath"
 echo;
 
+tee -a ~/.zshrc <<< "$(eval cat /Users/Shared/script/etc/zshrc-base.sh)" || exit -5
 
 # Switch to the specified user and start a new login shell, replacing the current shell
-echo -ne "Enter a new shell?[Y/n] "
+echo -ne "Enter a new shell?[enter=>YES/other=>no] "
 read res1
 #[[ "${res1,,}" =~ ^y(es)?$ ]] &&{
 #  log "Starting subshell ... ";
+[[ "$res1" != '' ]] &&
   exec su - "$user" -c "exec zsh";
 #}
 
 
 ##TODO: Implement Support: Log to file.
+{
 #echo
 #log "Log File"
 #log '--------'
 #cat "$logFile"
 #rm -f "$logFile"
-
-
-
+:;
 }

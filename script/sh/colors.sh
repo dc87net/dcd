@@ -16,9 +16,23 @@
 
 ## Log path should be specified in the parent script that sources this one,
 ## as *--->  $LOGFILE  <---*
-export LOGFILE="$LOGPATH/$LOGFNAME";
-export LOGFILE='/dev/null'
-export LOGENABLE=0
+[[ "$LOGPATH" && "$LOGFNAME"  ]] && {
+  export LOGFILE="$LOGPATH/$LOGFNAME";
+} || {
+  export LOGFILE='/dev/null'
+  export LOGENABLE=0
+}
+
+setupLog(){
+  sel="$1"
+  [[ "$sel" ]]&& {
+    [[ $sel == 'LOGPATH' ]] && { :; }
+    echo -e "$(eval echo "$1")"; # prints `test`
+  } || echo '[setupLog]: Error:  No Selector';
+}
+
+
+
 export LINECOLOR='BYELLOW' # Color of `log` indicator
 
 ## Color constant table
@@ -49,12 +63,39 @@ export NC='\033[0m'	# No Color/No Formatting
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 ")
 
-readonly logString="$(echo \
-'ZGF0ZU4oKXsKICBlY2hvICJbICQoZGF0ZSArIiV5JW0lZC0lSDolTTolUyIpXSAiCn0KbG9nUnVuKCl7CiAgbG9jYWwgY21kCiAgY21kPSQoY2F0KSAgI'\
-'CAjIENhcHR1cmUgdGhlIGNtZAoKICB0b3VjaCAiJExPR0ZJTEUiCiAgZWNobyAtZSAiW0NNRF0kKGRhdGVOKTogICR7Y21kfSIgPj4gIiR7TE9HRklMRX'\
-'0iICAgICAgICAgICAgICAgICAjIExvZyB0aGUgQ01EIGJlaW5nIGV4ZWN1dGVkCiAgZXZhbCAiJGNtZCIgMj4mMSB8IHRlZSAvZGV2L3R0eSAgfCB0ZWU'\
-'gLWEgIiRMT0dGSUxFIj4vZGV2L251bGwgICAjIGNhcHR1cmUsIHN0cmVhbSB0byB0dHksIGFuZCBsb2cgQ01EIHJlc3VsdHMKfQpsb2coKSB7CiAgbG9n'\
-'UnVuIDw8PCAiZWNobyAtZSBcIlwkeyR7TElORUNPTE9SfX09PT4ke05DfSAgJCpcIiIKfQo=' | base64 -d)"
+
+#readonly logString="$(echo \
+#'ZXJyKCl7CiAgZXZhbCBjYXQgLSAgPiYyOwp9CgpkYXRlTigpewogIGVjaG8gIlsgJChkYXRlICsiJXklbSVkLSVIOiVNOiVTIildICIKfQpsb2dSdW4oKXsKICBsb2NhbCBjbWQKICBjbWQ9JChjYXQgLSkgICAgIyBDYXB0dXJlIHRoZSBjbWQKICAjW1sgLWYgIiRMT0dGSUxFIiBdXSB8fCB7IExPR0ZJTEU9IiQobWt0ZW1wKSI7IGxvZyAiTG9nZmlsZSBETkU6ICR7WUVMTE9XfT09PiBcdCR7QlJFRH0ke0xPR0ZJTEV9JHtOQ30iOyB9CiAgI3RvdWNoICIkTE9HRklMRSIgMj4mMSAvZGV2L251bGwKICBlY2hvIC1lICJbQ01EXSQoZGF0ZU4pOiAgJHtjbWR9IiA+PiAiJHtMT0dGSUxFfSIgICAgICAgICAgICAgICAgICMgTG9nIHRoZSBDTUQgYmVpbmcgZXhlY3V0ZWQKICAjZXZhbCAiJGNtZCIgMj4mMSB8IHRlZSAtYSAiJExPR0ZJTEUiPi9kZXYvbnVsbCAgICMgY2FwdHVyZSwgc3RyZWFtIHRvIHR0eSwgYW5kIGxvZyBDTUQgcmVzdWx0cwp9CmxvZygpIHsKICBsb2dSdW4gPDw8ICJlY2hvIC1lIFwiXCR7JHtMSU5FQ09MT1J9feKukSR7TkN9ICAkKlwiIOKssiIKfQo='\
+#| base64 -d)"
+
+LOGSTRING(){
+  cat -  << 'EOF'
+    err(){
+      eval cat -  >&2;
+    }
+    dateN(){
+      echo "[ $(date +"%y%m%d-%H:%M:%S") ] "
+    }
+    logRun(){
+      local cmd
+      cmd=$(cat -)    # Capture the cmd
+      [[ -f "$LOGFILE" ]] || { LOGFILE="$(mktemp)"; log "Logfile: ${BRED}DNE. ...${GREEN}Creating ${NC}${YELLOW}==> \t${BRED}${LOGFILE}${NC}"; }
+      touch "$LOGFILE" 2>&1 /dev/null
+      echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"  # Log the CMD being executed
+      eval "$cmd" 2>&1 | tee -a "$LOGFILE" #>/dev/null   # capture: stream to tty, and log CMD results
+    }
+    log() {
+      logRun <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\" ⬲"
+    }
+EOF
+}
+
+#readonly logString="$(echo \
+#'ZGF0ZU4oKXsKICBlY2hvICJbICQoZGF0ZSArIiV5JW0lZC0lSDolTTolUyIpXSAiCn0KbG9nUnVuKCl7CiAgbG9jYWwgY21kCiAgY21kPSQoY2F0KSAgI'\
+#'CAjIENhcHR1cmUgdGhlIGNtZAoKICB0b3VjaCAiJExPR0ZJTEUiCiAgZWNobyAtZSAiW0NNRF0kKGRhdGVOKTogICR7Y21kfSIgPj4gIiR7TE9HRklMRX'\
+#'0iICAgICAgICAgICAgICAgICAjIExvZyB0aGUgQ01EIGJlaW5nIGV4ZWN1dGVkCiAgZXZhbCAiJGNtZCIgMj4mMSB8IHRlZSAvZGV2L3R0eSAgfCB0ZWU'\
+#'gLWEgIiRMT0dGSUxFIj4vZGV2L251bGwgICAjIGNhcHR1cmUsIHN0cmVhbSB0byB0dHksIGFuZCBsb2cgQ01EIHJlc3VsdHMKfQpsb2coKSB7CiAgbG9n'\
+#'UnVuIDw8PCAiZWNobyAtZSBcIlwkeyR7TElORUNPTE9SfX09PT4ke05DfSAgJCpcIiIKfQo=' | base64 -d)"
 
 
 
@@ -69,7 +110,7 @@ readonly logString="$(echo \
 ## Function to print the color table, as __executable__ script text
 _COLORS2ENV(){
   cat <<< "$colorString"
-  cat <<< "$logString"
+  LOGSTRING
 }
 
 ### **IMPORTANT**: Actually add Color Table to the env [NEXT STATEMENT];
@@ -82,20 +123,24 @@ _SHELL(){
   exec zsh
 }
 
-dateN(){
-  echo "[ $(date +"%y%m%d-%H:%M:%S")] "
-}
-logRun(){
-  local cmd
-  cmd=$(cat)    # Capture the cmd
+#err(){
+#  eval cat -  >&2;
+#}
+#dateN(){
+#  echo "[ $(date +"%y%m%d-%H:%M:%S") ] "
+#}
+#logRun(){
+#  local cmd
+#  cmd=$(cat -)    # Capture the cmd
+#  #[[ -f "$LOGFILE" ]] || { LOGFILE="$(mktemp)"; log "Logfile DNE: ${YELLOW}==> \t${BRED}${LOGFILE}${NC}"; }
+#  #touch "$LOGFILE" 2>&1 /dev/null
+#  #echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"                 # Log the CMD being executed
+#  eval "$cmd" 2>&1 | tee -a "$LOGFILE" #>/dev/null   # capture, stream to tty, and log CMD results
+#}
+#log(){
+#  logRun <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\" ⬲"
+#}
 
-  touch "$LOGFILE"
-  echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"                 # Log the CMD being executed
-  eval "$cmd" 2>&1 | tee /dev/tty  | tee -a "$LOGFILE">/dev/null   # capture, stream to tty, and log CMD results
-}
-log() {
-  logRun <<< "echo -e \"\${${LINECOLOR}}==>${NC}  $*\""
-}
 
 ##TODO>###### PARAM HANDLER ######<ODOT##
 #if [[ $1 ]];then log "params $*"; fi
@@ -111,7 +156,8 @@ if [[ $params == "colors" ]]; then
   _SHELL #(exec eval "zsh <<< env")
 fi
 if [[ $params == "test" ]]; then
-  echo "$(dcd colors get | column -t -s"\t")"
+  eval "$(dcd colors get)"
+  echo "&& dcd colors get | column -t -s"\t")"
 fi
 if [[ $params == "log" ]]; then
   (exec eval base64 -d -i - <<< 'IyEvdXNyL2Jpbi9lbnYgYmFzaAoKcmVzMT0iJChkY2QgY29sb3JzIGdldCkiCiNldmFsICIkKGRjZCBjb2xvcnMgZ2V0KSIKZXZhbCAiJHJlczEiCgpMSU5FQ09MT1I9J1lFTExPVycJIyBjb2xvciBuYW1lIGFzIHRleHQgKG5vdCBhcyBjb2xvciB2YXJpYWJsZSkKCgpsb2coKXsKICBldmFsICJlY2hvIC1lIFwiXCR7JExJTkVDT0xPUn09PT4gICR7TkN9JCpcIiIKfQo=')
@@ -170,3 +216,7 @@ demoColoredText(){
 #  #eval "$(_COLORS2ENV)"
 #  exec "zsh" -i
 #fi
+
+err <<< "imported" 2>/dev/null
+
+#LOGSTRING

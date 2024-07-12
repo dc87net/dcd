@@ -1,8 +1,15 @@
 #!/usr/bin/env zsh
 ## Rel.: /script/sh/reinstall.sh
+
+##??##: (cd /Users/Shared/script/ && exec sudo bash ./install.sh)
+
+
+
 eval "$(dcd colors get)"
 log "${MAGENTA}$(date)${NC}"
 #source "$installTo/bin/colors"
+
+
 
 # Get necessary information
 log "Reading defaults ..."
