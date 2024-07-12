@@ -4,6 +4,9 @@ export args="\'${*}\'"  # to pass to subshell
 
 eval "$(dcd colors get)"
 
+export clearTmpDate(){
+  ls -laOG | grep '"$@"' | grep 'tmp.' | awk '{print $NF}' | xargs -I{} rm -f \'{}\'
+}
 
 (
 dirLocation=$(mktemp -d)
