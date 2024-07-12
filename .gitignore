@@ -12,3 +12,6 @@
 /priv/*
 
 
+script/py/string.py
+etc/junk/test.sh
+script/py/string.py

@@ -25,6 +25,7 @@ iterm2
 man2html
 mc
 neofetch
+nmap
 pandoc
 parallel
 parallel
@@ -69,6 +70,8 @@ pipList="
 binwalk
 obd
 openai
+PyMuPDF
+pylatexenc
 "
 
 ##############
