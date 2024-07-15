@@ -20,8 +20,9 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 ## dcd ##
 #########
 
-DCD='/opt/script/dcd'
-consoleUser="$(eval echo "~" | awk -F'\/' '{print $NF}')"
+export DCD='/opt/script/dcd'
+export consoleUser="$(eval echo "~" | awk -F'\/' '{print $NF}')"
+export LOGFILE='/var/log/dcterm.log'
 
 [[ -f "$DCD" ]] &&{
   eval "$(dcd colors get)";
@@ -33,9 +34,11 @@ consoleUser="$(eval echo "~" | awk -F'\/' '{print $NF}')"
 }
 
 
-[[ "$(whoami)" == "$(eval echo basename ~)" ]] && { log "User home folder: ${BGREEN}verified${NC}"; } ||{
-  log "User home folder: ${RED}Failed${NC}: "\
-  "'${BRED}$(whoami)${NC}' != '$(eval echo basename ~)'"
+ [[ "$(whoami)" == "$(eval echo \"$(basename ~)\")" ]] && [[ -d "$(eval echo $(echo ~))" ]] \
+  && {
+    log "Detect home folder: ${BGREEN}pass${NC}"; } ||{
+    log "Detect home folder: ${RED}fail${NC}: [ '${BRED}$(whoami)${NC}' ? '$(eval echo basename ~)' :  ❌]"
+  };
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -45,3 +48,5 @@ fi
 ## Aliases ##
 alias ll='ls -laOG'
 alias cdrp='eval cd "$(realpath .)"'
+
+log "${BGREEN}  end of zshrc${NC}" >/dev/null

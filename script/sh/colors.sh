@@ -79,13 +79,14 @@ LOGSTRING(){
     logRun(){
       local cmd
       cmd=$(cat -)    # Capture the cmd
-      [[ -f "$LOGFILE" ]] || { LOGFILE="$(mktemp)"; log "Logfile: ${BRED}DNE. ...${GREEN}Creating ${NC}${YELLOW}==> \t${BRED}${LOGFILE}${NC}"; }
+#      [[ "$LOGFILE" != '/dev/null' ]] ||{
+#        [[ -f "$LOGFILE" ]] || { LOGFILE="$(mktemp)"; log "Logfile: ${BRED}DNE. ...${GREEN}Creating ${NC}${YELLOW}==> \t${BRED}${LOGFILE}${NC}"; };
       touch "$LOGFILE" 2>&1 /dev/null
       echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"  # Log the CMD being executed
       eval "$cmd" 2>&1 | tee -a "$LOGFILE" #>/dev/null   # capture: stream to tty, and log CMD results
     }
     log() {
-      logRun <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\" ⬲"
+      logRun <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\"     ⥃"
     }
 EOF
 }

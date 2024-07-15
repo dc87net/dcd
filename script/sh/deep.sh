@@ -6,7 +6,7 @@ eval "$(dcd colors get)"
 
 #- Ensure auxilary tool `pstree` is present
 CMD="pstree"
-echo $(command -v "$CMD")
+echo $(command -v "$CMD") >/dev/null
 command -v "$CMD" >/dev/null 2>&1 && {
   :
   } || {
