@@ -36,7 +36,7 @@ export LOGFILE='/var/log/dcterm.log'
 
  [[ "$(whoami)" == "$(eval echo \"$(basename ~)\")" ]] && [[ -d "$(eval echo $(echo ~))" ]] \
   && {
-    log "Detect home folder: ${BGREEN}pass${NC}"; } ||{
+    log "Detect home folder: ${BGREEN}pass1${NC}"; } ||{
     log "Detect home folder: ${RED}fail${NC}: [ '${BRED}$(whoami)${NC}' ? '$(eval echo basename ~)' :  ❌]"
   };
 

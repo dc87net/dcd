@@ -53,8 +53,7 @@ def offsetRightLine(text=' SECTIoON ', pad='-', lineWidth=80, offset=5):
     # Create the output string
     outStr = f"{pad * (lRPadding)}{pad * (lLPadding - offset)}{text}{pad * offset}"
 
-    # print(f"{outStr}")
-    # print(f"{outStr}\t{len(outStr)}")
+    print(f"{outStr}\t{len(outStr)}")
     return outStr
 
 def topBoxLine(text=' BOX ', lineWidth=80, align=1, box=(('╔','║','╙',),
@@ -107,11 +106,11 @@ def demo():
     pass
 
 def main(argv):
-    print(offsetLeftLine(argv[1], '┄', 65, 4))
+    offsetLeftLine(argv[1], '┄', 65, 4)
     pass
 
 if __name__ == "__main__":
-    if (not len(sys.argv) > 0):
+    if (len(sys.argv) > 0):
         print(f"{colors.BRED}Required{colors.NC}: message")
         exit(-1)
     main(sys.argv)

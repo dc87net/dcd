@@ -106,11 +106,20 @@ checkBrew(){
 
 }
 
+ohMy(){
+  [[ -d "$HOME/.oh-my-zsh/" ]] ||{
+    log "Installing ${RED}O${BRED}H${BYELLOW}M${BGREEN}Y${BLUE}Z${MAGENTA}S${BMAGENTA}H${NC}";
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)";
+  };
+  return 0;
+}
+
 # main
 main(){
   log "Preflight check ..."
-  checkBrew && log "${BGREEN}OK${NC}!" || exit 1;
 
+  ohMy    # Check for Oh My ZSH; install PRN
+  checkBrew && log "${BGREEN}OK${NC}!" || exit 1;
   {
     log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}brew${NC}";
       # Formulae

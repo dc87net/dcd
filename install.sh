@@ -27,7 +27,11 @@ updateFile(){
   local appendLine=$(echo "$base64String" | base64 -d) || "$(echo)";
   local output=$(grep -Fv "$appendLine" "$outFile")
 
-  echo -e " ${BYELLOW}└──╼${NC}  ${RED}Append: $outFile${NC}:  ${CYAN}$appendLine${NC}"
+  echo -e " ${BYELLOW}└──╼${NC}  ${RED}Append: ${CYAN}$appendLine${NC}"
+  [[ -f "$HOME/.zshrc" ]] &&{
+    echo -e " ${BYELLOW}└──╼${NC}  ${RED}Append: as ${YELLOW}Import${NC}:  extant ${CYAN}.zshrc${NC}";
+#    cat "$HOME/.zshrc"
+  } || { echo -e " ${BYELLOW}└──╼${NC}  ${YELLOW}Notice: ${RED} No extant ${CYAN}.zshrc${RED} -- Continuing ...${NC}"; }
 
   printf "%s\n" "$output" > "$outFile"
   echo "$appendLine" >> "$outFile"
