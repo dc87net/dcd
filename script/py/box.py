@@ -5,9 +5,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
 import colors
 
-
-
-
 # colorsFile=f"{os.path.pardir}/colors.py"
 # import
 def centerLine(text=' SECTION ', pad='-', lineWidth=80):
@@ -110,7 +107,7 @@ def main(argv):
     pass
 
 if __name__ == "__main__":
-    if (len(sys.argv) > 0):
+    if (len(sys.argv) <= 0):
         print(f"{colors.BRED}Required{colors.NC}: message")
         exit(-1)
     main(sys.argv)

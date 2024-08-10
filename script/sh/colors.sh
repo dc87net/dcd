@@ -19,7 +19,9 @@
 [[ "$LOGPATH" && "$LOGFNAME"  ]] && {
   export LOGFILE="$LOGPATH/$LOGFNAME";
 } || {
-  export LOGFILE='/dev/null'
+  export LOGPATH='/var/log/'
+  export LOGFNAME='dcterm.log'
+  export LOGFILE="$LOGPATH/$LOGFNAME";
   export LOGENABLE=0
 }
 

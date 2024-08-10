@@ -59,6 +59,7 @@ casks="
 --cask gimp
 --cask github
 --cask google-chrome
+--cask imazing
 --cask microsoft-remote-desktop
 --cask phpstorm
 --cask pycharm-ce
@@ -82,6 +83,8 @@ pylatexenc
 ##############
 
 checkBrew(){
+  log "${CYAN}n.b.${NC}:\t Checking for ${YELLOW}Rosetta${NC} ..."
+
   log "Checking for ${CYAN}brew${NC} ..."
   # Check for Homebrew
   [[ -z "$(brew --prefix 2>/dev/null | wc -l | awk '{print $1}')" ]] && {

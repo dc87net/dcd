@@ -7,28 +7,53 @@ installTo="$(defaults read /opt/script/config.plist installTo)"
 source "$installTo/etc/colors.sh"
 
 # Make sure scriptlet is specificed
+# shellcheck disable=SC2242
 [[ -z "$1" ]] && { log "${BRED}Error${NC}: ${RED}No target specified${NC}"; exit -100; }
 
 # Parse args
-CMD="$1"; shift
-ARGS="$*"
+export CMD="$1"; shift
+export ARGS="$*"
 #log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
 
 # Check for 'special' verbs        ✅       ✅       ✅
-if [[ "$CMD" == "install" ]]; then     # SPECIAL: `install`
-  installScript="$installTo/script/sh/install"
-  log "${BMAGENTA}Special: ${CYAN}install:  <${BCYAN}$ARGS${NC}>"
-  log "Install script root:  @<$installScript>"
+[[ "$CMD" == "install" ]]&&{                                                              # SPECIAL: `install`
+  installScript="$installTo/script/sh/install";
+  log "${BMAGENTA}Special: ${CYAN}install:  <${BCYAN}$ARGS${NC}>";
+  log "Install script root:  @<$installScript>";
 
 
-  [[ "$ARGS" == "common" ]] && { { bash "$installScript/brew-list.sh" && log "${BMAGENTA}Special Install: Reports ${GREEN}Complete${NC}"; } \
-    || { log "${BMAGENTA}Special Install: Reports ${YELLOW}Finished${NC} **does not indicate success or failure!**"; } }
-  [[ "$ARGS" == "kleopatra" ]] && { bash "$installScript/kleopatra.sh"; log "${BMAGENTA}Special Install: ${BGREEN}Caveats pre-satisfied${NC}"; }
-  exit 0
-elif [[ "$CMD" == "help" ]]; then
-  echo "dcd"
-  :
-fi
+  [[ "$ARGS" == "common" ]] && { { bash "$installScript/brew-list.sh" && log "${BMAGENTA}Special Install: Reports ${GREEN}Complete${NC}"; }\
+    || { log "${BMAGENTA}Special Install: Reports ${YELLOW}Finished${NC} **does not indicate success or failure!**"; exit 0; }; };
+
+  [[ "$ARGS" == "kleopatra" ]]&&{
+    bash "$installScript/kleopatra.sh";
+    log "${BMAGENTA}Special Install${NC} --> ${MAGENTA}note${NC}: ${BGREEN}Caveats pre-satisfied${NC}";
+  };
+};
+
+[[ "$CMD" == "help" ]]&&{                                                                            # SPECIAL: `help`
+  log -e "$0 \t(HELP):";
+  echo -e "  ⇝ \"$0\" is a CLI utility designed to facilitate common tasks on macOS; it is not designed for use on
+  other POSIX systems."
+  exit 0;
+};
+
+#if [[ -d "$installTo/script/sh/$CMD" ]];then                                    # SPECIAL: searching for alternate commands
+#  shift; F="$1";
+#  [[ -f "$installTo/script/sh/$F/$CMD" ]]&&{
+#    cmdStr="$installTo/script/sh/$F/$CMD $ARGS";
+#    log "${BMAGENTA}Special: ${CYAN}exec:  < ${BCYAN}$cmdStr${NC} > $((eval $cmdStr); echo -n $?)";
+#    exit $?;
+#    };
+#fi
+
+  # otherwise... invalid SPECIAL specified
+  #log "${BRED}Error${NC}: ${RED}Unable to parse the ${BYELLOW}SPECIAL${NC} provided";
+#  exit 1;
+
+
+
 
 # Run the scriptlet
-(exec eval '/opt/script/bin/"$CMD" "$ARGS"')
+(eval eval "$installTo/bin/$CMD" "$ARGS") || exit $?
+exit "$?"  #b Script completed --> exit gracefully with natural return value
