@@ -3,16 +3,28 @@
 [[ "$(uname)" == "Darwin" ]] || { exit 20; } # make sure this is macOS
 
 # Prep
-installTo="$(defaults read /opt/script/config.plist installTo)"
+export installTo="$(defaults read /opt/script/config.plist installTo)"
 source "$installTo/etc/colors.sh"
+
+# HELP
+help(){
+  log -e "$0 \t(HELP):";
+    echo -e "  ⇝ \"$0\" is a CLI utility designed to facilitate common tasks on macOS; it is not designed for use on
+    other POSIX systems."
+    echo -e "\n${CYAN}Commands$NC}:"
+    log "$(ls $installTo/bin/)"
+    exit 0;
+}
 
 # Make sure scriptlet is specificed
 # shellcheck disable=SC2242
-[[ -z "$1" ]] && { log "${BRED}Error${NC}: ${RED}No target specified${NC}"; exit -100; }
+[[ -z "$1" ]] && { (log "${BRED}Error${NC}: ${RED}Missing, unknown, or ambiguous target${NC}" && help) && (echo -e "\n code: 101" exit 101; }
 
 # Parse args
 export CMD="$1"; shift
 export ARGS="$*"
+export ARGS64="$(echo $* | base64)"
+echo "$(base64 -d "$ARGS64")"; exit 0;
 #log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
 
 # Check for 'special' verbs        ✅       ✅       ✅
@@ -29,13 +41,15 @@ export ARGS="$*"
     bash "$installScript/kleopatra.sh";
     log "${BMAGENTA}Special Install${NC} --> ${MAGENTA}note${NC}: ${BGREEN}Caveats pre-satisfied${NC}";
   };
+
+   [[ "$ARGS" == "fix" ]]&&{
+      bash "$installScript/fix.sh";
+      exec zsh;
+    };
 };
 
 [[ "$CMD" == "help" ]]&&{                                                                            # SPECIAL: `help`
-  log -e "$0 \t(HELP):";
-  echo -e "  ⇝ \"$0\" is a CLI utility designed to facilitate common tasks on macOS; it is not designed for use on
-  other POSIX systems."
-  exit 0;
+  help
 };
 
 #if [[ -d "$installTo/script/sh/$CMD" ]];then                                    # SPECIAL: searching for alternate commands
