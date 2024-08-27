@@ -28,11 +28,13 @@ mtr
 neofetch
 nmap
 octave
+opensc
 openssh-server
 openssh
 openssl
 pandoc
 parallel
+perl
 pstree
 pyinstaller
 python-argcomplete
@@ -50,10 +52,12 @@ xquartz
  ## CASKS ## alphabetically ordered ##
 casks="
 --cask 1password@nightly
+--cask adobe-acrobat-reader
 --cask chatgpt
 --cask chromium
 --cask commander-one
 --cask db-browser-for-sqlite
+--cask eclipse-ide eclipse-java eclipse-php eclipse-cpp
 --cask firefox
 --cask fleet
 --cask gimp
@@ -78,6 +82,9 @@ obd
 openai
 PyMuPDF
 pylatexenc
+sounddevice
+sympy
+
 "
 
 ##############
@@ -96,7 +103,8 @@ checkBrew(){
   log "\tUpdating ${BCYAN}brew${NC} ..."
   brew update || exit -100
   log "\tUpdating ${MAGENTA}formulae${NC} ..."
-  brew upgrade || exit -101
+  (brew upgrade -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}";        exit -102; };
+  (brew upgarde --cask -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit -103; }
   log "\tUpdating ${MAGENTA}casks${NC} ..."
   brew upgrade --cask || exit -102;
   sleep 1
@@ -135,6 +143,7 @@ main(){
     log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}pip3${NC}";
     xargs pip3 install --break-system-packages --trusted-host pypi.org --trusted-host pypi.python.org \
       --trusted-host files.pythonhosted.org <<< "$pipList";
+
       # Kleopatra (Certificate/PGP Mgmt (by KDE)
     log "${BMAGENTA}Installing${NC}: Kleopatra using ${CYAN}dcd install kleopatra${NC}";
 

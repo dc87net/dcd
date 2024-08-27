@@ -29,8 +29,9 @@ def genHeader(text):
     print(f"{colors.BLUE}{equalLine}{colors.NC}")
     print(f"{mainLine}")
     print(f"{colors.BLUE}{equalLine}{colors.NC}")
+    sys.stdout.flush()
 
-    sleep(0.1)
+    # sleep(0.1)
     return 0
 
 # Press the green button in the gutter to run the script.

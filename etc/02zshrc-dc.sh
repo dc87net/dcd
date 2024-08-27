@@ -1,4 +1,4 @@
-## .ZSHRC ##
+## .ZSHRC DC ##
 
 
 PATH=/opt/script:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/X11/bin:/Applications/Wireshark.app/Contents/MacOS:/Applications/iTerm.app/Contents/Resources/utilities
@@ -50,3 +50,8 @@ alias ll='ls -laOG'
 alias cdrp='eval cd "$(realpath .)"'
 
 log "${BGREEN}  end of zshrc${NC}" >/dev/null
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
+
+export PKG_CONFIG_PATH="/opt/homebrew/opt/kleopatra/lib/pkgconfig"
+export PATH="/opt/homebrew/opt/kleopatra/bin:$PATH"

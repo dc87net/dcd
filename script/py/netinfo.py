@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
 import subprocess
+import sys
+
+
+def shex(cmd='echo Error: No command specified'):
+    res = subprocess.run(['zsh', '-c', cmd], capture_output=True, text=True)
+    return res
 
 script = r"""#!/bin/bash
 ## Copyright 2024 DC87 Solutions LLC. All rights reserved.
@@ -37,18 +43,32 @@ done"""
 def networkInfo():
     # Executing the script using subprocess
     result = subprocess.run(['bash', '-c', script], capture_output=True, text=True)
-    
+
     # Print the output
     print(result.stdout.strip())
-    
+
     # Check for errors
     if result.stderr:
         print("Error:", result.stderr)
         return result.stderr.strip()
     else:
         return result.stdout.strip()
-        
+
 def printScript():
     return script
-        
+
 networkInfo()
+
+# if (sys.argv.index('') != False):
+if (len(sys.argv) > 1):
+    if (sys.argv.index('ports') != False):
+        # Get the list from lsof
+        print(f"LISTENING:")
+        res = shex('lsof -a -d 0-999999 | grep CP | grep LISTEN | col -b');
+        print(res.stdout.strip());
+        print("\nESTABLISHED:");
+        res = res = shex('lsof -a -d 0-999999 | grep CP | grep ESTABLISHED | col -b');
+        print(res.stdout.strip());
+
+
+exit(0);

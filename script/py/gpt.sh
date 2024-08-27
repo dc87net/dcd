@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
 source "$(defaults read /opt/script/config.plist installTo)/etc/colors.sh"
-
 gptDir="$(defaults read /opt/script/config.plist installTo)/gpt"
 
 # Make sure there was a OpenAI scriptlet specificed

@@ -19,7 +19,8 @@ def centerLine(text=' SECTION ', pad='-', lineWidth=80):
     # Create the output string
     outStr = f"{pad * lLPadding}{text}{pad * lRPadding}"
 
-    print(f"{outStr}\t{len(outStr)}")
+    # print(f"{outStr}\t{len(outStr)}")
+    print(f"{outStr}")
     return 0
 
 def offsetLeftLine(text=' SECTIoON ', pad='-', lineWidth=80, offset=5):
@@ -34,7 +35,7 @@ def offsetLeftLine(text=' SECTIoON ', pad='-', lineWidth=80, offset=5):
     # Create the output string
     outStr = f"{pad * offset}{text}{pad * (lLPadding - offset)}{pad * (lRPadding)}"
 
-    print(f"{outStr}\t{len(outStr)}")
+    # print(f"{outStr}\t{len(outStr)}")
     return outStr
 
 
@@ -50,7 +51,7 @@ def offsetRightLine(text=' SECTIoON ', pad='-', lineWidth=80, offset=5):
     # Create the output string
     outStr = f"{pad * (lRPadding)}{pad * (lLPadding - offset)}{text}{pad * offset}"
 
-    print(f"{outStr}\t{len(outStr)}")
+    # print(f"{outStr}\t{len(outStr)}")
     return outStr
 
 def topBoxLine(text=' BOX ', lineWidth=80, align=1, box=(('╔','║','╙',),
@@ -102,17 +103,23 @@ def demo():
     centerLine(' SECTION ', '-', 80)
     pass
 
-def main(argv):
-    offsetLeftLine(argv[1], '┄', 65, 4)
+def main(arg1, pad='═', width=80, offset=4):
+    print(offsetLeftLine(arg1, pad, width, offset))
     pass
 
 if __name__ == "__main__":
-    if (len(sys.argv) <= 0):
-        print(f"{colors.BRED}Required{colors.NC}: message")
+    # print(f"length: {len(sys.argv)}")
+    if (not (len(sys.argv) > 1)):
+        print(f"{colors.BRED}Required{colors.NC}: text")
         exit(-1)
-    main(sys.argv)
-    exit(0)
-    pass
+    if (len(sys.argv)>=4):
+        main(f" {sys.argv[1]} ", f"{sys.argv[2]}")
+        exit(0)
+    if (len(sys.argv)==5):
+        main(f" {sys.argv[1]} ", f"{sys.argv[2]}", int(sys.argv[3]))
+        exit(0)
+    else:
+        main(f" {sys.argv[1]} ")
+        exit(0)
 
-
-print('Why are we here?!');
+print(f"Why are we here? {exit(99)}")

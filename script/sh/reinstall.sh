@@ -5,7 +5,10 @@
 
 
 
-eval "$(dcd colors get)"
+# Prep
+export installTo="$(defaults read /opt/script/config.plist installTo)"
+source "$installTo/etc/colors.sh"
+
 log "${MAGENTA}$(date)${NC}"
 #source "$installTo/bin/colors"
 

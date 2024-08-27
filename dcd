@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+readonly MYNAME="$(basename $0)"
 [[ "$(uname)" == "Darwin" ]] || { exit 20; } # make sure this is macOS
 
 # Prep
@@ -8,23 +9,27 @@ source "$installTo/etc/colors.sh"
 
 # HELP
 help(){
-  log -e "$0 \t(HELP):";
-    echo -e "  ⇝ \"$0\" is a CLI utility designed to facilitate common tasks on macOS; it is not designed for use on
+  log "$MYNAME \t(HELP):";
+    echo -e "  ⇝ ${BMAGENTA}${MYNAME}${NC} is a CLI utility designed to facilitate common tasks on macOS; it is not designed for use on
     other POSIX systems."
-    echo -e "\n${CYAN}Commands$NC}:"
-    log "$(ls $installTo/bin/)"
-    exit 0;
+    echo;
+    echo -e  "${CYAN}--------${NC}";
+    echo -e "${BCYAN}COMMANDS${NC}:"
+    echo -e  "${CYAN}--------${NC}";
+    echo -e "$(ls $installTo/bin/)"
+    [[ "$1" == 'NOEXIT' ]] || exit 0;
 }
 
 # Make sure scriptlet is specificed
 # shellcheck disable=SC2242
-[[ -z "$1" ]] && { (log "${BRED}Error${NC}: ${RED}Missing, unknown, or ambiguous target${NC}" && help) && (echo -e "\n code: 101" exit 101; }
+[[ -z "$1" ]] && { (log "${BRED}Error${NC}: ${RED}Missing, unknown, or ambiguous target${NC}" && help "NOEXIT" && echo -e "\n${RED} code${NC}: 101";); exit 101; };
 
 # Parse args
+
 export CMD="$1"; shift
-export ARGS="$*"
-export ARGS64="$(echo $* | base64)"
-echo "$(base64 -d "$ARGS64")"; exit 0;
+export ARGS="$*";
+#export ARGS64="$(echo $* | base64)"
+#echo "$(base64 -d "$ARGS64")"; exit 0;
 #log "C:<$CMD>\t A:<$ARGS>"; echo;  # DEBUG
 
 # Check for 'special' verbs        ✅       ✅       ✅
@@ -33,9 +38,19 @@ echo "$(base64 -d "$ARGS64")"; exit 0;
   log "${BMAGENTA}Special: ${CYAN}install:  <${BCYAN}$ARGS${NC}>";
   log "Install script root:  @<$installScript>";
 
+  [[ "$ARGS" == "update" ||  "$ARGS" == 'update' || "$ARGS" == 'u' ]]&&{
+    log "[ $date ] >>> ${CYAN}Manual update of ${BGREEN}homebrew${CYAN} and its components ..."
+    log "${BMAGENTA} >> Updating ${GREEN}brew${NC} ..."
+    log "$(brew update >/dev/tty)"
+    log "${BMAGENTA} >> Updating ${GREEN}components${NC} ..."
+    brew outdated | xargs -I{} zsh -c "echo -n {} | awk '{print $NF}'" | xargs -I{} brew upgrade --greedy {};
+    log "The command completed with exit code < $? >; n.b.: Please see any above messages for details or "\
+        "${BYELLOW}important${NC} messages"
+    exit 0;
+  };
 
   [[ "$ARGS" == "common" ]] && { { bash "$installScript/brew-list.sh" && log "${BMAGENTA}Special Install: Reports ${GREEN}Complete${NC}"; }\
-    || { log "${BMAGENTA}Special Install: Reports ${YELLOW}Finished${NC} **does not indicate success or failure!**"; exit 0; }; };
+    || { log "${BMAGENTA}Special Install: Reports ${YELLOW}finished${NC} **${RED}does not indicate success or failure!**${NC}"; exit 0; }; };
 
   [[ "$ARGS" == "kleopatra" ]]&&{
     bash "$installScript/kleopatra.sh";
@@ -43,6 +58,7 @@ echo "$(base64 -d "$ARGS64")"; exit 0;
   };
 
    [[ "$ARGS" == "fix" ]]&&{
+      log "Executing ${BRED}repair${NC} tasks ...";
       bash "$installScript/fix.sh";
       exec zsh;
     };

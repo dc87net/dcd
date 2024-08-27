@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 ## Shows basic stats from OBD-II Serial reader
 
