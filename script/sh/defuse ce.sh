@@ -15,6 +15,7 @@ fi
 
 ##########
 
+log "$(dcd box 'Defusing CE')"
 
 cd /Library/LaunchDaemons
 list="$(ls -la | awk '{print $NF}' | grep plist | grep 'vnt.')"
@@ -25,5 +26,3 @@ while IFS= read -r line; do
   mv $line /Users/douglas/Downloads/cve/
 done <<< "$list"
 ps auxc | grep Cov | awk '{print $2}' | xargs -I{} kill -9 {} && mv /Applications/Covenant\ Eyes.app/ /Applications/Covenant\ Eyes2.app/
-
-
