@@ -52,7 +52,6 @@ xquartz
  ## CASKS ## alphabetically ordered ##
 casks="
 --cask 1password@nightly
---cask adobe-acrobat-reader
 --cask chatgpt
 --cask chromium
 --cask commander-one
@@ -73,6 +72,7 @@ casks="
 --cask ykman
 --cask xquartz
 --cask yubico-yubikey-manager
+--cask chatgpt
 "
 
 ## PYTHON PACKAGES ## alphabetically ordered ##
@@ -84,7 +84,6 @@ PyMuPDF
 pylatexenc
 sounddevice
 sympy
-
 "
 
 ##############
@@ -106,7 +105,7 @@ checkBrew(){
   (brew upgrade -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}";        exit -102; };
   (brew upgarde --cask -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit -103; }
   log "\tUpdating ${MAGENTA}casks${NC} ..."
-  brew upgrade --cask || exit -102;
+  (brew upgrade --cask -g) || exit -102;
   sleep 1
   log "cleanup ... "; brew cleanup;
   sleep 1

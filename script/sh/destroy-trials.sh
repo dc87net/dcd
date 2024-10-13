@@ -16,13 +16,11 @@ logerr(){
 
 
 ### Cool.  Uses herestring to run arbitrary string
-#export CMDs='echo one; echo 2'
-
-export CMDs='cat aa | '
-sudo zsh <<< $(echo -ne "$(eval echo -ne "
-  echo -ne \"{ ${CMDs}; }\";
-                    ")";);
+##export CMDs='echo one; echo 2'
+#
+#export CMDs='cat aa | '
+#sudo zsh <<< "$(echo -ne "$(eval echo -ne "echo -ne \"{ ${CMDs}; }\"ls l-a;")";)";
 
 
 
-# sudo rm -rf /Users//Library/Trial/ && sudo mkdir -p /Users/douglas/Library/Trial/ && sudo chown douglas /Users/douglas/Library/Trial/ && sudo chflags schg /Users/douglas/Library/Trial/
+ sudo rm -rf /Users//Library/Trial/ && sudo mkdir -p /Users/douglas/Library/Trial/ && sudo chown douglas /Users/douglas/Library/Trial/ && sudo chflags schg /Users/douglas/Library/Trial/
