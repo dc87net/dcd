@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+## Get the user who is currently on console (macOS GUI).
+
 
 eval "$(dcd colors get)"
 

@@ -28,4 +28,4 @@ log "Switched to source directory!"
 log "Beginning re-install ..."
 #log "\t${BMAGENTA}Note${NC}: a few minor errors may occur, but everything should be fine!"
 (exec sudo bash install.sh)
-echo; log "${BGREEN}Complete!${NC}" # unreachable?
+echo; (log "${BGREEN}Complete!${NC}")>/dev/stderr # unreachable?

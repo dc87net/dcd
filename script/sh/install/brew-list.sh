@@ -28,7 +28,6 @@ mtr
 neofetch
 nmap
 octave
-opensc
 openssh-server
 openssh
 openssl
@@ -64,6 +63,7 @@ casks="
 --cask google-chrome
 --cask imazing
 --cask microsoft-remote-desktop
+--cask opensc
 --cask phpstorm
 --cask pycharm-ce
 --cask sublime-text
@@ -72,8 +72,8 @@ casks="
 --cask ykman
 --cask xquartz
 --cask yubico-yubikey-manager
---cask chatgpt
 "
+#--cask chatgpt
 
 ## PYTHON PACKAGES ## alphabetically ordered ##
 pipList="
@@ -82,9 +82,13 @@ obd
 openai
 PyMuPDF
 pylatexenc
-sounddevice
 sympy
+numpy
+matplotlib
+scipy
+qtip
 "
+#sounddevice
 
 ##############
 
@@ -103,7 +107,7 @@ checkBrew(){
   brew update || exit -100
   log "\tUpdating ${MAGENTA}formulae${NC} ..."
   (brew upgrade -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}";        exit -102; };
-  (brew upgarde --cask -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit -103; }
+  (brew upgrade --cask -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit -103; }
   log "\tUpdating ${MAGENTA}casks${NC} ..."
   (brew upgrade --cask -g) || exit -102;
   sleep 1
@@ -120,15 +124,16 @@ ohMy(){
   [[ -d "$HOME/.oh-my-zsh/" ]] ||{
     log "Installing ${RED}O${BRED}H${BYELLOW}M${BGREEN}Y${BLUE}Z${MAGENTA}S${BMAGENTA}H${NC}";
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)";
+    return 0;
   };
-  return 0;
+  return 1;
 }
 
 # main
 main(){
   log "Preflight check ..."
 
-  ohMy    # Check for Oh My ZSH; install PRN
+  ohMy || log "${RED}Error${NC}:\t${BRED}${NC}"    # Check for Oh My ZSH; install PRN
   checkBrew && log "${BGREEN}OK${NC}!" || exit 1;
   {
     log "${BMAGENTA}Installing${NC}: Common programs using ${CYAN}brew${NC}";

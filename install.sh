@@ -171,14 +171,34 @@ echo;
 
 tee -a ~/.zshrc <<< "$(eval cat /Users/Shared/script/etc/zshrc-base.sh)" || exit -5
 
+##TODO: N.B.: Ensure that .zshrc is in order!
+installFromFromPlist="$(defaults read /opt/script/config installFrom)"
+installToFromPlist="$(defaults read /opt/script/config installTo)"
+tempLoc="$(mktemp)"
+log "\n\tTemp Location@\t<${MAGENTA} $tempLoc ${NC}>"
+#b64txt="$(base64 -d -i "${installFromFromPlist}/etc/02zsh-ohmy.txt")"
+echo -en  "\t${BYELLOW}< "
+base64 -d -i "${installFromFromPlist}/etc/02zsh-ohmy.txt" | tee /dev/tty | tee "$tempLoc"
+echo -e "${NC}\n"
+rm -f "$tempLoc" || exit 101
+
+
+
+
+
+
 # Switch to the specified user and start a new login shell, replacing the current shell
 echo -ne "Enter a new shell?[enter=>YES/other=>no] "
 read res1
 #[[ "${res1,,}" =~ ^y(es)?$ ]] &&{
 #  log "Starting subshell ... ";
-[[ "$res1" != '' ]] &&
+[[ "$res1" == '' ]] &&
   exec su - "$user" -c "exec zsh";
 #}
+
+log "${BYELLOW}\tSTANDARD FLOW: CHECK ENV??${NC}"
+zsh -i -c "source ${thisPath}/; exec zsh"
+
 
 
 ##TODO: Implement Support: Log to file.

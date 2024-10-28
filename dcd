@@ -11,7 +11,7 @@ source "$installTo/etc/colors.sh"
 help(){
   log "$MYNAME \t(HELP):";
     echo -e "  ⇝ ${BMAGENTA}${MYNAME}${NC} is a CLI utility designed to facilitate common tasks on macOS; it is not designed for use on
-    other POSIX systems."
+    other POSIX systems\t*\tap/dc - 2023,2024.1019"
     echo;
     echo -e  "${CYAN}--------${NC}";
     echo -e "${BCYAN}COMMANDS${NC}:"
