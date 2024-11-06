@@ -53,10 +53,11 @@ l(){  ##TODO>>> LOCK FUNCTION <<<<<#
 
 u(){  ##TODO>>> UNLOCK FUNCTION <<<<<#
   log "$(dcd box 'Defusing NS/C@no Py')"
-    cmds=('sudo launchctl bootout system /Library/LaunchDaemons/com.protection.macos-vpn.plist'
-          'sudo launchctl bootout system /Library/LaunchDaemons/org.netspark.SturdinesS.plist'
-          'sudo killall -9 Canopy'
-          )
+#    cmds=('sudo launchctl bootout system /Library/LaunchDaemons/com.protection.macos-vpn.plist'
+#          'sudo launchctl bootout system /Library/LaunchDaemons/org.netspark.SturdinesS.plist'
+#          'sudo killall -9 Canopy'
+#          )
+    cmds=('sudo launchctl unload -w /Library/LaunchDaemons/com.protection.macos-vpn.plist&& sudo launchctl unload -w /Library/LaunchDaemons/org.netspark.SturdinesS.plist&& (pgrep Canopy | sudo xargs kill -9)');
     ##TODO:UNUSED: ["echo dcd netinfo | xargs -n1 | awk '{print \\\$2}' | xargs -I{} sudo networksetup -setwebproxystate {} off"]
 
   for cmd in "${cmds[@]}"; do

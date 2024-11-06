@@ -6,7 +6,7 @@ eval "$(dcd colors get)"
 eval "$(dcd colors log)"
 #exec 2>/dev/null
 
-[[ "$(uname)" == "Darwin" ]] || exit -1;  # make sure this is macOS
+[[ "$(uname)" == "Darwin" ]] || exit 200;  # make sure this is macOS
 
 ##### LIST #####
  ## FORMULAE ## alphabetically ordered ##
@@ -28,7 +28,6 @@ mtr
 neofetch
 nmap
 octave
-openssh-server
 openssh
 openssl
 pandoc
@@ -38,6 +37,7 @@ pstree
 pyinstaller
 python-argcomplete
 python@3.12
+python3
 s3cmd
 screen
 tcl-tk
@@ -55,7 +55,6 @@ casks="
 --cask chromium
 --cask commander-one
 --cask db-browser-for-sqlite
---cask eclipse-ide eclipse-java eclipse-php eclipse-cpp
 --cask firefox
 --cask fleet
 --cask gimp
@@ -73,6 +72,7 @@ casks="
 --cask xquartz
 --cask yubico-yubikey-manager
 "
+#--cask eclipse-ide eclipse-java eclipse-php eclipse-cpp
 #--cask chatgpt
 
 ## PYTHON PACKAGES ## alphabetically ordered ##
@@ -104,12 +104,12 @@ checkBrew(){
 
   log "UPDATE WITH HOMEBREW:"
   log "\tUpdating ${BCYAN}brew${NC} ..."
-  brew update || exit -100
+  brew update || exit 100
   log "\tUpdating ${MAGENTA}formulae${NC} ..."
-  (brew upgrade -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}";        exit -102; };
-  (brew upgrade --cask -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit -103; }
+  (brew upgrade -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit 102; };
+  (brew upgrade --cask -g) || { log "${BRED}Error:${RED} Error in formulae upgrade (greedy).${NC}"; exit 103; }
   log "\tUpdating ${MAGENTA}casks${NC} ..."
-  (brew upgrade --cask -g) || exit -102;
+  (brew upgrade --cask -g) || exit 104;
   sleep 1
   log "cleanup ... "; brew cleanup;
   sleep 1
