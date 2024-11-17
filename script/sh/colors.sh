@@ -38,7 +38,7 @@ setupLog(){
 export LINECOLOR='BYELLOW' # Color of `log` indicator
 
 ## Color constant table
-readonly colorString=$(cat <<< "
+readonly colorString="$(cat - << 'eof'
 ##	╔═══════════════════════╗
 ##	║ ## COLOR CONSTANTS ## ║
 ##	╚═══════════════════════╝
@@ -62,8 +62,9 @@ export	BWHITE='\033[0;97m'	# Bright White
 export	BYELLOW='\033[0;93m'	# Bright Yellow
 ## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
 export NC='\033[0m'	# No Color/No Formatting
-## ┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉┉
-")
+## ┉┉┉┉┉┉┉┉┉┉┉┉
+eof
+)";
 
 
 #readonly logString="$(echo \
@@ -91,6 +92,8 @@ LOGSTRING(){
       logRun <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\"     ⥃"
     }
 EOF
+
+exit 0;
 }
 
 #readonly logString="$(echo \
@@ -132,7 +135,7 @@ _SHELL(){
 #dateN(){
 #  echo "[ $(date +"%y%m%d-%H:%M:%S") ] "
 #}
-#logRun(){
+#logRun(){hyp
 #  local cmd
 #  cmd=$(cat -)    # Capture the cmd
 #  #[[ -f "$LOGFILE" ]] || { LOGFILE="$(mktemp)"; log "Logfile DNE: ${YELLOW}==> \t${BRED}${LOGFILE}${NC}"; }
@@ -146,11 +149,11 @@ _SHELL(){
 
 
 ##TODO>###### PARAM HANDLER ######<ODOT##
-#if [[ $1 ]];then log "params $*"; fi
+#if [[ $1 ]];then log "params: $*"; fi
 params="$*"
 #echo -e "\tPARAMS: $*"
 [[ $params == "colors" ]] && { cat <<< "$colorString"; }  # cat <<< "$(dcd colors log)"; } fi
-[[ $params == "get" ]]    && { _COLORS2ENV; echo "export LINECOLOR='BYELLOW'"; }
+[[ $params == "get" ]]    && { _COLORS2ENV; echo "export LINECOLOR='BYELLOW'"; } # cat <<< "$colorString"; echo "export LINECOLOR='BYELLOW'"; } ##
 if [[ $params == "colors" ]]; then
   _COLORS2ENV
   log "Color Table:  ✅ Color check for subshell: ${BCYAN}${$}{NC} @ current depth info: "
@@ -186,9 +189,9 @@ enableLogging(){
 
 ## Demo code
 demoColoredText(){
-  [ $1 -lt 1 ] && { # if there are no args passed into the script
+  [[ ! $1 ]] && { # if there are no args passed into the script
     log "Example:\t${CYAN}CYAN${NC}"
-    exit 0
+#    exit 0
   }
 }
 
@@ -220,6 +223,8 @@ demoColoredText(){
 #  exec "zsh" -i
 #fi
 
-err <<< "imported" 2>/dev/null
+#err <<< "imported" 2>/dev/null
 
+#_COLORS2ENV
 #LOGSTRING
+#demoColoredText
