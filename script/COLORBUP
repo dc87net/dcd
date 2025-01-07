@@ -80,16 +80,16 @@ LOGSTRING(){
       echo "[ $(date +"%y%m%d-%H:%M:%S") ] "
     }
     logRun(){
-#      local cmd
-#      cmd=$(cat -)    # Capture the cmd
+      local cmd
+      cmd=$(cat -)    # Capture the cmd
 #      [[ "$LOGFILE" != '/dev/null' ]] ||{
 #        [[ -f "$LOGFILE" ]] || { LOGFILE="$(mktemp)"; log "Logfile: ${BRED}DNE. ...${GREEN}Creating ${NC}${YELLOW}==> \t${BRED}${LOGFILE}${NC}"; };
-#      touch "$LOGFILE" 2>&1 /dev/null
-#      echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"  # Log the CMD being executed
-#      eval "$cmd" 2>&1 | tee -a "$LOGFILE" #>/dev/null   # capture: stream to tty, and log CMD results
+      touch "$LOGFILE" 2>&1 /dev/null
+      echo -e "[CMD]$(dateN):  ${cmd}" >> "${LOGFILE}"  # Log the CMD being executed
+      eval "$cmd" 2>&1 | tee -a "$LOGFILE" #>/dev/null   # capture: stream to tty, and log CMD results
     }
     log() {
-      bash <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\"     ⥃"
+      logRun <<< "echo -e \"\${${LINECOLOR}}⮑${NC}  $*\"     ⥃"
     }
 EOF
 }

@@ -71,6 +71,7 @@ casks="
 --cask ykman
 --cask xquartz
 --cask yubico-yubikey-manager
+--cask raspberry-pi-imager
 "
 #--cask eclipse-ide eclipse-java eclipse-php eclipse-cpp
 #--cask chatgpt

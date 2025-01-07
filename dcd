@@ -68,6 +68,7 @@ export ARGS="$*";
   help
 };
 
+
 #if [[ -d "$installTo/script/sh/$CMD" ]];then                                    # SPECIAL: searching for alternate commands
 #  shift; F="$1";
 #  [[ -f "$installTo/script/sh/$F/$CMD" ]]&&{
